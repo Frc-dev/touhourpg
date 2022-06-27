@@ -53,12 +53,12 @@
                     </div>
 
                 <div id="joined" class="joined">
-                    <img src="/open-iconic/svg/account-login.svg" class="userIcon" title="@lang('Join Date')"> {{ $userExists->created_at }} </img>
+                    <img src="/open-iconic/svg/account-login.svg" class="userIcon" title="@lang('Join date')"> {{ $userExists->created_at }} </img>
                 </div>
                 @if($isUser == "false")
                     @auth <!-- only users can send messages or report -->
                 <div id="useractions" class="useractions mt-3 offset-2">
-                    <input type="image" src="/open-iconic/svg/envelope-closed.svg" class="userIcon mr-1" title="@lang('Send Message')" data-toggle="modal" data-target="#privateMessageModal">
+                    <input type="image" src="/open-iconic/svg/envelope-closed.svg" class="userIcon mr-1" title="@lang('Send message')" data-toggle="modal" data-target="#privateMessageModal">
 
                     <div class="modal fade" id="sendPrivateMessageModal" tabindex="-1" role="dialog" aria-labelledby="sendPrivateMessageModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -128,7 +128,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        {{__('You can edit your profile by clicking on the text fields and change your profile picture by clicking on the upload icon.')}}
+                                        @lang('You can edit your profile by clicking on the text fields and change your profile picture by clicking on the upload icon.')
                                     </div>
                                 </div>
                             </div>

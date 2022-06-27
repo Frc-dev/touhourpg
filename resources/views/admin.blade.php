@@ -119,7 +119,7 @@
 
                         </div>
                         <textarea class="mt-2 form-control" placeholder="@lang("State your reasons for removing this ban.")" id="banHandlingText"></textarea>
-                        <button class="btn btn-info btn-default" id="banProcess">@lang('Rescind ban')</button>
+                        <button class="btn btn-info btn-default" id="banProcess">@lang('Revoke ban')</button>
                     </div>
                 </div>
             </div>

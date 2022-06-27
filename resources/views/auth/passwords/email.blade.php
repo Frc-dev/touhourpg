@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+                <div class="card-header">@lang('Reset password')</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -16,11 +16,11 @@
 
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
-                        <i>{{__('Remember that you need to have linked your account to a mail address to use this option')}}</i>
+                        <i>@lang('Remember that you need to have linked your account to an email address to use this option')</i>
 
 
                         <div class="form-group row mt-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-mail address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">@lang('E-mail address')</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -36,7 +36,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
+                                    @lang('Send password reset link')
                                 </button>
                             </div>
                         </div>
