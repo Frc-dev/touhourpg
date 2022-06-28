@@ -46,6 +46,198 @@ $(document).ready(() => {
         user,
     };
 
+    function processEvent(eventId) {
+        eventId = parseInt(eventId, 10);
+        switch (eventId) {
+            case 1:
+                // add picture to playfield
+                var img = "/sprites/characters/Marisa/sprite.png";
+                $("#playField").append(
+                    `<img id='event1Img' src='${  img  }'>`
+                );
+                break;
+            case 2:
+                // remove picture
+                $("#event1Img").remove();
+                break;
+            case 3:
+                // add 2 sprite options
+                const src1 = "/sprites/player/card/M.png";
+                const src2 = "/sprites/player/card/F.png";
+                const button1 =
+                    `<input type='image' src='${ 
+                    src1 
+                    }' class='btTxt genderButton tutorialSprite' id='maleSprite'>`;
+                const button2 =
+                    `<input type='image' src='${ 
+                    src2 
+                    }' class='btTxt genderButton tutorialSprite' id='femaleSprite'>`;
+
+                $("#playField").append(button1);
+                $("#playField").append(button2);
+
+                break;
+            case 4:
+                // load map 1
+                values = {
+                    map: 1,
+                    user,
+                    prevMap: 0,
+                };
+                getdetails("/play/getMap", values).done((response) => {
+                    if (response.success !== undefined) {
+                        const main = response.success.mainSprite;
+                        const event = response.success.eventSprite;
+                        const {id} = response.success;
+                        // append map to playfield
+                        $("#mainSprite").append(
+                            `<img src=${  mapsUrl  }/${  id  }/${  main  }>`
+                        );
+                        $("#eventSprite").append(
+                            `<img src=${  mapsUrl  }/${  id  }/${  event  }>`
+                        );
+                        window.location.reload();
+                    }
+                });
+                break;
+            // numbers are missing because the events inbetween are regular conversation/event triggers which have been automatized
+            case 19:
+                // pc opening
+                inPc = true;
+                $("#PCModal").modal("show");
+                inEventRange = false;
+                break;
+            case 21:
+                // shop line after closing modal
+                // first, end the previous one
+                conversationArray = [];
+                convArrayIndex = 0;
+
+                $("#npcSpritePosition").attr("hidden", "true");
+                $("#textBox").empty().attr("hidden", "true");
+
+                values = {
+                    user,
+                    conversationId: 15,
+                };
+                startConversation(values);
+                break;
+
+            case 32:
+                // healing team
+                // use the user to heal all members of the team that are in positions 1/6
+                values = {
+                    user,
+                };
+                getdetails("/play/healTeam", values).done((response) => {
+                    if (response.error !== undefined) {
+                        // TODO what do we do here
+                    }
+                });
+                break;
+            case 33:
+                // open shop
+                $("#shopModal").modal("show");
+                $("#shopModal")
+                    .children()
+                    .children()
+                    .children()
+                    .first()
+                    .attr("data-id", "#store_town1");
+                break;
+            case 34:
+                // receive first character
+                values = {
+                    user,
+                    instance: 1,
+                };
+                getdetails("/play/getCharacter", values).done((
+                    response
+                ) => {
+                    if (response.success !== undefined) {
+                        // character saved, proceed with event
+                        // load conversation
+                        values = {
+                            user,
+                            conversationId: 4,
+                        };
+                        startConversation(values);
+                    } else {
+                        // TODO what do we do here
+                    }
+                });
+                break;
+            case 35:
+                // triggered after receiving reimu, closes way out of the lab, activates marisa callable, disabled reimu dialogue
+                toggleCall(user, 25);
+                toggleCall(user, 26);
+                toggleCall(user, 28);
+                break;
+            case 36:
+                // activate Marisa's battle
+                // dialogue has already been said, set up battle
+                controlEnvironment = "battle";
+                // get battle data
+                // few notations: JS handles all the events, PHP the CALCULATIONS AND DATA GETTING ONLY
+                // case 36 signals the specific battle we're doing, so we know which combat data to get
+                // 2 functions needed ->
+                // getBattleData()-> receives data to get specific data from trainers, so it must receive the trainers id
+                // startBattle() -> this one sets up all the non-dynamic elements that are non-specific to a battle and receives the battle data (arrays) which have already been sent
+                trainerId = userData.nick;
+                rivalId = "#rival_1";
+                combatType = "trainer";
+                getBattleData(trainerId, rivalId);
+
+                break;
+            case 37:
+                // toggle events 28, 33, 30, 7, 27
+                toggleCall(user, 28);
+                toggleCall(user, 33);
+                toggleCall(user, 30);
+                toggleCall(user, 7);
+                toggleCall(user, 27);
+                break;
+            case 38:
+                // route 1 trainers battle
+                controlEnvironment = "battle";
+                trainerId = userData.nick;
+                rivalId = "#route1_trainer1";
+                combatType = "trainer";
+                getBattleData(trainerId, rivalId);
+
+                break;
+            case 39:
+                // gym leader Aya's battle
+                controlEnvironment = "battle";
+                trainerId = userData.nick;
+                rivalId = "#gymleader_1";
+                combatType = "trainer";
+                getBattleData(trainerId, rivalId);
+
+                break;
+            case 40:
+                // trigger conversation 22 and receive first badge
+                userData.progress += 1;
+                values = {
+                    user,
+                    conversationId: 22,
+                };
+                startConversation(values);
+                break;
+            case 41:
+                // trigger conversation 23
+                toggleCall(user, 22);
+                values = {
+                    user,
+                    conversationId: 23,
+                };
+                startConversation(values);
+                break;
+            default:
+                break;
+        }
+    }
+
     function mapZero(data) {
         // this function is triggered when the user is new to the game and he is nowhere in the ingame map
         // it is meant to trigger the tutorial scenes
@@ -164,6 +356,111 @@ $(document).ready(() => {
             // TODO what do we do here
         }
     });
+
+    function checkEvent(x, y) {
+        // get color below div
+
+        const p = context.getImageData(x, y, 1, 1).data;
+
+        if (p[0] === 0 && p[1] === 0 && p[2] === 0 && p[3] === 0) {
+            // check if its nothing
+            inEventRange = false;
+            canMove = true;
+        } else if (p[0] === 0 && p[1] === 255 && p[2] === 248 && p[3] === 255) {
+            // check if its hitbox
+
+            canMove = false;
+        } else if (p[0] === 0 && p[1] === 255 && p[2] === 53 && p[3] === 255) {
+            // check if its grass
+            // does some related to doll battling
+            canMove = true;
+            // each time we step on green, chance of summoning a wild character of 10%
+            const chance = Math.floor(Math.random() * 100);
+            if (chance > 90) {
+                // get map data
+                values = {
+                    user,
+                    mapId: userData.position,
+                };
+                getdetails("/play/getMapData", values).done((
+                    response
+                ) => {
+                    if (response.success !== undefined) {
+                        // we have map data
+                        const mapLevel = response.success.levelRange.split("-");
+                        const charLevel =
+                            mapLevel[
+                                Math.floor(Math.random() * mapLevel.length)
+                            ];
+
+                        const mapChars = response.success.mapChars.split(",");
+                        const charId =
+                            mapChars[
+                                Math.floor(Math.random() * mapChars.length)
+                            ];
+                        values = {
+                            charLevel,
+                            charId,
+                            user,
+                        };
+                        getdetails("/play/createWildCharacter", values).done(
+                            (response1) => {
+                                if (response1.success !== undefined) {
+                                    // true
+                                    const trainerId = userData.nick;
+                                    const rivalId = `temp_${  userData.nick}`;
+                                    combatType = "wild";
+                                    getBattleData(trainerId, rivalId);
+                                } else {
+                                    // TODO what do we do here
+                                }
+                            }
+                        );
+                    }
+                });
+            }
+        } else {
+            // its a non-defined event
+            // get current full p value, compare to rgb, convert the value to hex, compare the hex value to list of known events
+            // get full p values
+            const color = [p[0], p[1], p[2]];
+            values = {
+                color,
+                user: userData.nick,
+            };
+            getdetails("/play/getEventCode", values).done((response) => {
+                if (response.success !== undefined) {
+                    if (response.success.eventType === "change") {
+                        // change map
+                        if (processMap(userData.position, response.success.mapChange) === true) {
+                            // TODO why is this empty
+                        }
+                    } else if (response.success.eventType === "conversation") {
+                        // check if callable
+                        if (response.userevent !== undefined) {
+                            if (response.userevent.callable === "true") {
+                                // can be called
+                                canMove = false;
+                                inEventRange = true;
+                                eventType = "conversation";
+                                conversationId =
+                                    response.success.conversationTrigger;
+                            } else {
+                                canMove = true;
+                            }
+                        }
+                    } else if (response.success.eventType === "special") {
+                        eventCode = response.success.id;
+                        inEventRange = true;
+                        canMove = true;
+                        eventType = "";
+                    } else {
+                        // TODO what do we do here
+                    }
+                }
+            });
+        }
+    }
 
     $(document).on("keydown", (event) => {
         switch (controlEnvironment) {
@@ -506,7 +803,7 @@ $(document).ready(() => {
                         inPc = false;
                         $("#inventoryModal").removeAttr("hidden").modal("show");
                         break;
-                        
+
                     default: break;
                 }
                 break;
@@ -514,303 +811,6 @@ $(document).ready(() => {
                 default: break;
         }
     });
-
-    function checkEvent(x, y) {
-        // get color below div
-
-        const p = context.getImageData(x, y, 1, 1).data;
-
-        if (p[0] === 0 && p[1] === 0 && p[2] === 0 && p[3] === 0) {
-            // check if its nothing
-            inEventRange = false;
-            canMove = true;
-        } else if (p[0] === 0 && p[1] === 255 && p[2] === 248 && p[3] === 255) {
-            // check if its hitbox
-
-            canMove = false;
-        } else if (p[0] === 0 && p[1] === 255 && p[2] === 53 && p[3] === 255) {
-            // check if its grass
-            // does some related to doll battling
-            canMove = true;
-            // each time we step on green, chance of summoning a wild character of 10%
-            const chance = Math.floor(Math.random() * 100);
-            if (chance > 90) {
-                // get map data
-                values = {
-                    user,
-                    mapId: userData.position,
-                };
-                getdetails("/play/getMapData", values).done((
-                    response
-                ) => {
-                    if (response.success !== undefined) {
-                        // we have map data
-                        const mapLevel = response.success.levelRange.split("-");
-                        const charLevel =
-                            mapLevel[
-                                Math.floor(Math.random() * mapLevel.length)
-                            ];
-
-                        const mapChars = response.success.mapChars.split(",");
-                        const charId =
-                            mapChars[
-                                Math.floor(Math.random() * mapChars.length)
-                            ];
-                        values = {
-                            charLevel,
-                            charId,
-                            user,
-                        };
-                        getdetails("/play/createWildCharacter", values).done(
-                            (response) => {
-                                if (response.success !== undefined) {
-                                    // true
-                                    const trainerId = userData.nick;
-                                    const rivalId = `temp_${  userData.nick}`;
-                                    combatType = "wild";
-                                    getBattleData(trainerId, rivalId);
-                                } else {
-                                    // TODO what do we do here
-                                }
-                            }
-                        );
-                    }
-                });
-            }
-        } else {
-            // its a non-defined event
-            // get current full p value, compare to rgb, convert the value to hex, compare the hex value to list of known events
-            // get full p values
-            const color = [p[0], p[1], p[2]];
-            values = {
-                color,
-                user: userData.nick,
-            };
-            getdetails("/play/getEventCode", values).done((response) => {
-                if (response.success !== undefined) {
-                    if (response.success.eventType === "change") {
-                        // change map
-                        if (processMap(userData.position, response.success.mapChange) === true) {
-                            // TODO why is this empty
-                        }
-                    } else if (response.success.eventType === "conversation") {
-                        // check if callable
-                        if (response.userevent !== undefined) {
-                            if (response.userevent.callable === "true") {
-                                // can be called
-                                canMove = false;
-                                inEventRange = true;
-                                eventType = "conversation";
-                                conversationId =
-                                    response.success.conversationTrigger;
-                            } else {
-                                canMove = true;
-                            }
-                        }
-                    } else if (response.success.eventType === "special") {
-                        eventCode = response.success.id;
-                        inEventRange = true;
-                        canMove = true;
-                        eventType = "";
-                    } else {
-                        // TODO what do we do here
-                    }
-                }
-            });
-        }
-    }
-
-    function processEvent(eventId) {
-        eventId = parseInt(eventId);
-        switch (eventId) {
-            case 1:
-                // add picture to playfield
-                var img = "/sprites/characters/Marisa/sprite.png";
-                $("#playField").append(
-                    `<img id='event1Img' src='${  img  }'>`
-                );
-                break;
-            case 2:
-                // remove picture
-                $("#event1Img").remove();
-                break;
-            case 3:
-                // add 2 sprite options
-                const src1 = "/sprites/player/card/M.png";
-                const src2 = "/sprites/player/card/F.png";
-                const button1 =
-                    `<input type='image' src='${ 
-                    src1 
-                    }' class='btTxt genderButton tutorialSprite' id='maleSprite'>`;
-                const button2 =
-                    `<input type='image' src='${ 
-                    src2 
-                    }' class='btTxt genderButton tutorialSprite' id='femaleSprite'>`;
-
-                $("#playField").append(button1);
-                $("#playField").append(button2);
-
-                break;
-            case 4:
-                // load map 1
-                values = {
-                    map: 1,
-                    user,
-                    prevMap: 0,
-                };
-                getdetails("/play/getMap", values).done((response) => {
-                    if (response.success !== undefined) {
-                        const main = response.success.mainSprite;
-                        const event = response.success.eventSprite;
-                        const {id} = response.success;
-                        // append map to playfield
-                        $("#mainSprite").append(
-                            `<img src=${  mapsUrl  }/${  id  }/${  main  }>`
-                        );
-                        $("#eventSprite").append(
-                            `<img src=${  mapsUrl  }/${  id  }/${  event  }>`
-                        );
-                        window.location.reload();
-                    }
-                });
-                break;
-            // numbers are missing because the events inbetween are regular conversation/event triggers which have been automatized
-            case 19:
-                // pc opening
-                inPc = true;
-                $("#PCModal").modal("show");
-                inEventRange = false;
-                break;
-            case 21:
-                // shop line after closing modal
-                // first, end the previous one
-                conversationArray = [];
-                convArrayIndex = 0;
-
-                $("#npcSpritePosition").attr("hidden", "true");
-                $("#textBox").empty().attr("hidden", "true");
-
-                values = {
-                    user,
-                    conversationId: 15,
-                };
-                startConversation(values);
-                break;
-
-            case 32:
-                // healing team
-                // use the user to heal all members of the team that are in positions 1/6
-                values = {
-                    user,
-                };
-                getdetails("/play/healTeam", values).done((response) => {
-                    if (response.error !== undefined) {
-                        // TODO what do we do here
-                    }
-                });
-                break;
-            case 33:
-                // open shop
-                $("#shopModal").modal("show");
-                $("#shopModal")
-                    .children()
-                    .children()
-                    .children()
-                    .first()
-                    .attr("data-id", "#store_town1");
-                break;
-            case 34:
-                // receive first character
-                values = {
-                    user,
-                    instance: 1,
-                };
-                getdetails("/play/getCharacter", values).done((
-                    response
-                ) => {
-                    if (response.success !== undefined) {
-                        // character saved, proceed with event
-                        // load conversation
-                        values = {
-                            user,
-                            conversationId: 4,
-                        };
-                        startConversation(values);
-                    } else {
-                        // TODO what do we do here
-                    }
-                });
-                break;
-            case 35:
-                // triggered after receiving reimu, closes way out of the lab, activates marisa callable, disabled reimu dialogue
-                toggleCall(user, 25);
-                toggleCall(user, 26);
-                toggleCall(user, 28);
-                break;
-            case 36:
-                // activate Marisa's battle
-                // dialogue has already been said, set up battle
-                controlEnvironment = "battle";
-                // get battle data
-                // few notations: JS handles all the events, PHP the CALCULATIONS AND DATA GETTING ONLY
-                // case 36 signals the specific battle we're doing, so we know which combat data to get
-                // 2 functions needed ->
-                // getBattleData()-> receives data to get specific data from trainers, so it must receive the trainers id
-                // startBattle() -> this one sets up all the non-dynamic elements that are non-specific to a battle and receives the battle data (arrays) which have already been sent
-                var trainerId = userData.nick;
-                var rivalId = "#rival_1";
-                combatType = "trainer";
-                getBattleData(trainerId, rivalId);
-
-                break;
-            case 37:
-                // toggle events 28, 33, 30, 7, 27
-                toggleCall(user, 28);
-                toggleCall(user, 33);
-                toggleCall(user, 30);
-                toggleCall(user, 7);
-                toggleCall(user, 27);
-                break;
-            case 38:
-                // route 1 trainers battle
-                controlEnvironment = "battle";
-                var trainerId = userData.nick;
-                var rivalId = "#route1_trainer1";
-                combatType = "trainer";
-                getBattleData(trainerId, rivalId);
-
-                break;
-            case 39:
-                // gym leader Aya's battle
-                controlEnvironment = "battle";
-                var trainerId = userData.nick;
-                var rivalId = "#gymleader_1";
-                combatType = "trainer";
-                getBattleData(trainerId, rivalId);
-
-                break;
-            case 40:
-                // trigger conversation 22 and receive first badge
-                userData.progress++;
-                values = {
-                    user,
-                    conversationId: 22,
-                };
-                startConversation(values);
-                break;
-            case 41:
-                // trigger conversation 23
-                toggleCall(user, 22);
-                values = {
-                    user,
-                    conversationId: 23,
-                };
-                startConversation(values);
-                break;
-            default:
-                break;
-        }
-    }
 
     function processMap(currentMap, nextMap) {
         const values = {
