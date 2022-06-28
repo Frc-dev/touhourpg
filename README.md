@@ -1,4 +1,4 @@
-Currently refactoring and reworking, offline.
+This is an old project I am currently restoring and refactoring. The website is offline until release.
 
 <h1>TouhouRPG</h1>
 
