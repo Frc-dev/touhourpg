@@ -1,18 +1,13 @@
+import * as ajax from "./shared/ajax";
+
+// warning: this code is very WET, not very SOLID and thus it SMELLS REALLY BAD (get it?), proceed with caution and keep in mind I wrote this in 2 weeks fresh out of school 
+// it will eventually be good though, consider this a legacy code in progress of being refactored and reworked.
+
 $(document).ready(() => {
-    function getdetails(link, values) {
-        return $.ajax({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            url: link,
-            type: "post",
-            dataType: "json",
-            data: values,
-        });
-    }
     // in this case, because of how javascript works, global variables are a necessary evil to keep certain
     // events initialised in between functions.
     // TODO is it really
+    // TODO2 consider using sessions or cookies for that - you from the future
     let controlEnvironment = "field"; // default control environment
     let conversationArray = []; // array that holds all conversation lines
     let convArrayIndex = 0; // current position in the array
@@ -49,7 +44,7 @@ $(document).ready(() => {
     function startConversation(values) {
         $("#npcSpritePosition").removeAttr("hidden");
         $("#textBox").removeAttr("hidden");
-        getdetails("/play/getConversation", values).done((response) => {
+        ajax.getDetails("/play/getConversation", values).done((response) => {
             if (response.success !== undefined) {
                 conversationArray = response.success;
                 convArrayIndex = 0;
@@ -88,6 +83,7 @@ $(document).ready(() => {
 
     function processEvent(eventId) {
         eventId = parseInt(eventId, 10);
+        // TODO too many switches in the app
         switch (eventId) {
             case 1:
                 // add picture to playfield
@@ -125,7 +121,8 @@ $(document).ready(() => {
                     user,
                     prevMap: 0,
                 };
-                getdetails("/play/getMap", values).done((response) => {
+
+                ajax.getDetails("/play/getMap", values).done((response) => {
                     if (response.success !== undefined) {
                         const main = response.success.mainSprite;
                         const event = response.success.eventSprite;
@@ -170,7 +167,8 @@ $(document).ready(() => {
                 values = {
                     user,
                 };
-                getdetails("/play/healTeam", values).done((response) => {
+
+                ajax.getDetails("/play/healTeam", values).done((response) => {
                     if (response.error !== undefined) {
                         // TODO what do we do here
                     }
@@ -192,9 +190,8 @@ $(document).ready(() => {
                     user,
                     instance: 1,
                 };
-                getdetails("/play/getCharacter", values).done((
-                    response
-                ) => {
+
+                ajax.getDetails("/play/getCharacter", values).done((response) => {
                     if (response.success !== undefined) {
                         // character saved, proceed with event
                         // load conversation
@@ -287,7 +284,8 @@ $(document).ready(() => {
             user: data.nick,
             conversationId: 1,
         };
-        getdetails("/play/getConversation", values).done((response) => {
+
+        ajax.getDetails("/play/getConversation", values).done((response) => {
             if (response.success !== undefined) {
                 conversationArray = response.success;
                 // load first panel of the scene
@@ -299,7 +297,7 @@ $(document).ready(() => {
                 };
 
                 // TODO check what the standard is for ajax responses, since eslint complains at response
-                getdetails("/play/processConversation", mapValues).done((response1) => {
+                ajax.getDetails("/play/processConversation", mapValues).done((response1) => {
                     if (response1.success !== undefined) {
                         $("#textBox").html(
                             conversationArray[convArrayIndex].lineContent
@@ -343,7 +341,7 @@ $(document).ready(() => {
         });
     }
 
-    getdetails("/play/getData", values).done((response) => {
+    ajax.getDetails("/play/getData", values).done((response) => {
         if (response.success !== undefined) {
             userData = response.success;
 
@@ -355,7 +353,7 @@ $(document).ready(() => {
                     user,
                     prevMap: userData.prevPosition,
                 };
-                getdetails("/play/getMap", values).done((response) => {
+                ajax.getDetails("/play/getMap", values).done((response) => {
                     if (response.success !== undefined) {
                         const main = response.success.mainSprite;
                         const event = response.success.eventSprite;
@@ -423,7 +421,8 @@ $(document).ready(() => {
                     user,
                     mapId: userData.position,
                 };
-                getdetails("/play/getMapData", values).done((
+
+                ajax.getDetails("/play/getMapData", values).done((
                     response
                 ) => {
                     if (response.success !== undefined) {
@@ -444,7 +443,7 @@ $(document).ready(() => {
                             charId,
                             user,
                         };
-                        getdetails("/play/createWildCharacter", values).done(
+                        ajax.getDetails("/play/createWildCharacter", values).done(
                             (response1) => {
                                 if (response1.success !== undefined) {
                                     // true
@@ -469,7 +468,7 @@ $(document).ready(() => {
                 color,
                 user: userData.nick,
             };
-            getdetails("/play/getEventCode", values).done((response) => {
+            ajax.getDetails("/play/getEventCode", values).done((response) => {
                 if (response.success !== undefined) {
                     if (response.success.eventType === "change") {
                         // change map
@@ -528,7 +527,7 @@ $(document).ready(() => {
                                 user,
                             };
 
-                            getdetails(
+                            ajax.getDetails(
                                 "/play/processConversation",
                                 values
                             ).done((response) => {
@@ -860,7 +859,7 @@ $(document).ready(() => {
         const values = {
             user,
         };
-        getdetails("/play/getData", values).done((response) => {
+        ajax.getDetails("/play/getData", values).done((response) => {
             if (response.success !== undefined) {
                 userData = response.success;
             }
@@ -874,7 +873,7 @@ $(document).ready(() => {
             user,
             prevMap: currentMap,
         };
-        getdetails("/play/getMap", values).done((response) => {
+        ajax.getDetails("/play/getMap", values).done((response) => {
             if (response.success !== undefined) {
                 const main = response.success.mainSprite;
                 const event = response.success.eventSprite;
@@ -936,7 +935,7 @@ $(document).ready(() => {
         if (inPc === true) {
             values.pc = true;
         }
-        getdetails("/play/getCharacterRoster", values).done((
+        ajax.getDetails("/play/getCharacterRoster", values).done((
             response
         ) => {
             if (response.success !== undefined) {
@@ -1049,7 +1048,8 @@ $(document).ready(() => {
         values = {
             user,
         };
-        getdetails("/play/getItems", values).done((response) => {
+
+        ajax.getDetails("/play/getItems", values).done((response) => {
             if (response.success !== undefined) {
                 const itemList = response.success;
                 let itemDiv = "";
@@ -1103,7 +1103,8 @@ $(document).ready(() => {
         values = {
             user,
         };
-        getdetails("play/getDataCard", values).done((response) => {
+
+        ajax.getDetails("play/getDataCard", values).done((response) => {
             if (response.success !== undefined) {
                 $("#cardDiv").empty();
                 const data = response.success;
@@ -1170,7 +1171,7 @@ $(document).ready(() => {
                     values.pc = true;
                 }
 
-                getdetails("/play/sortCharacters", values).done((
+                ajax.getDetails("/play/sortCharacters", values).done((
                     response
                 ) => {
                     if (response.success !== undefined) {
@@ -1309,7 +1310,8 @@ $(document).ready(() => {
             shopId,
             user,
         };
-        getdetails("/play/getBuyData", values).done((response) => {
+
+        ajax.getDetails("/play/getBuyData", values).done((response) => {
             if (response.success !== undefined) {
                 const itemList = response.success;
                 let shopDiv = "";
@@ -1364,7 +1366,8 @@ $(document).ready(() => {
         values = {
             user,
         };
-        getdetails("/play/getSellData", values).done((response) => {
+
+        ajax.getDetails("/play/getSellData", values).done((response) => {
             if (response.success !== undefined) {
                 const itemList = response.success;
                 let shopDiv = "";
@@ -1413,7 +1416,7 @@ $(document).ready(() => {
         });
     });
 
-    $(document).on("click", ".buyItemButton", function () {
+    $(document).on("click", ".buyItemButton", () => {
         const numberOfItems = this.previousElementSibling.value;
         if (numberOfItems !== "") {
             // buy item
@@ -1423,7 +1426,7 @@ $(document).ready(() => {
                 item: this.id,
             };
 
-            getdetails("/play/buyItem", values).done((response) => {
+            ajax.getDetails("/play/buyItem", values).done((response) => {
                 if (response.success !== undefined) {
                     // reset shop so balance is updated
                     const shopId = $("#shopModal")
@@ -1436,7 +1439,7 @@ $(document).ready(() => {
                         user,
                         shopId,
                     };
-                    getdetails("/play/getBuyData", values).done((
+                    ajax.getDetails("/play/getBuyData", values).done((
                         response
                     ) => {
                         if (response.success !== undefined) {
@@ -1488,7 +1491,7 @@ $(document).ready(() => {
         }
     });
 
-    $(document).on("click", ".sellItemButton", function () {
+    $(document).on("click", ".sellItemButton", () => {
         const numberOfItems = this.previousElementSibling.value;
         if (numberOfItems !== "") {
             // buy item
@@ -1498,7 +1501,7 @@ $(document).ready(() => {
                 item: this.id,
             };
 
-            getdetails("/play/sellItem", values).done((response) => {
+            ajax.getDetails("/play/sellItem", values).done((response) => {
                 if (response.success !== undefined) {
                     // reset inventory so balance is updated
                     const shopId = $("#shopModal")
@@ -1511,7 +1514,8 @@ $(document).ready(() => {
                         user,
                         shopId,
                     };
-                    getdetails("/play/getSellData", values).done((
+
+                    ajax.getDetails("/play/getSellData", values).done((
                         response
                     ) => {
                         if (response.success !== undefined) {
@@ -1567,14 +1571,15 @@ $(document).ready(() => {
         }
     });
 
-    $(document).on("click", ".itemUse", function () {
+    $(document).on("click", ".itemUse", () => {
         // open modal similar to characters and give option to use item on them
         $("#itemUseModal").modal("show");
         values = {
             user,
         };
         const {id} = this;
-        getdetails("/play/getCharacterRoster", values).done((
+
+        ajax.getDetails("/play/getCharacterRoster", values).done((
             response
         ) => {
             if (response.success !== undefined) {
@@ -1600,6 +1605,7 @@ $(document).ready(() => {
                             id 
                             }' class='float-right btn btn-default btn-success useItemButton'>Use</button></div>`
                     );
+
                     $("#itemUseList").append(
                         `${"<div class=cont><div class='leftrow'>" +
                             "<img class='spriteImg' src='"}${ 
@@ -1648,17 +1654,18 @@ $(document).ready(() => {
             position: this.parentElement.id,
         };
         const {id} = this;
-        getdetails("/play/useItem", values).done((response) => {
+
+        ajax.getDetails("/play/useItem", values).done((response) => {
             if (response.success !== undefined) {
                 // reload character modal with updated values
                 values = {
                     user,
                 };
-                getdetails("/play/getCharacterRoster", values).done((
+                ajax.getDetails("/play/getCharacterRoster", values).done((
                     response
                 ) => {
                     if (response.success !== undefined) {
-                        charData = response.success;
+                        const charData = response.success;
                         // clear div
                         $("#itemUseList").empty();
                         // append data to div
@@ -1731,7 +1738,7 @@ $(document).ready(() => {
         values = {
             user,
         };
-        getdetails("/play/getItems", values).done((response) => {
+        ajax.getDetails("/play/getItems", values).done((response) => {
             if (response.success !== undefined) {
                 const itemList = response.success;
                 let itemDiv = "";
@@ -1790,7 +1797,7 @@ $(document).ready(() => {
         }
         values.user = user;
 
-        getdetails("/play/chooseSprite", values).done((response) => {
+        ajax.getDetails("/play/chooseSprite", values).done((response) => {
             if (response.success !== undefined) {
                 $(".genderButton").remove();
             }
@@ -1803,7 +1810,7 @@ $(document).ready(() => {
             trainer: trainerId,
             rival: rivalId,
         };
-        getdetails("/play/getBattleData", values).done((response) => {
+        ajax.getDetails("/play/getBattleData", values).done((response) => {
             if (response.success !== undefined) {
                 trainerData = response.success[0];
                 rivalData = response.success[1];
@@ -1961,7 +1968,7 @@ $(document).ready(() => {
 
         // fill atk modal
         const j = 1;
-        for (let i = 0; i <= 4; i++) {
+        for (let i = 0; i <= 4; i += 1) {
             if (trainerData[0].moves[i] !== undefined) {
                 // assign to button
                 $(`#atkBtn${  j}`).append(
@@ -1988,7 +1995,8 @@ $(document).ready(() => {
         values = {
             user,
         };
-        getdetails("/play/getItems", values).done((response) => {
+
+        ajax.getDetails("/play/getItems", values).done((response) => {
             if (response.success !== undefined) {
                 const itemList = response.success;
                 let itemDiv = "";
@@ -2164,7 +2172,7 @@ $(document).ready(() => {
                             user,
                             rivalId: rivalData[0].data.owner,
                         };
-                        getdetails("/play/getCapturedChar", values).done(
+                        ajax.getDetails("/play/getCapturedChar", values).done(
                             (response) => {
                                 if (response.success !== undefined) {
                                     captured = true;
@@ -2243,7 +2251,7 @@ $(document).ready(() => {
         // there are several types of items, so we'll leave open other kinds of checking
         switch (itemId) {
             case 2:
-                "heal 20 hp";
+                // heal 20 hp
                 // check hp
                 if (
                     trainerData[position].data.healthPoints !==
@@ -2268,7 +2276,7 @@ $(document).ready(() => {
                 }
                 break;
             case 3:
-                "heal 50 hp";
+                // heal 50 hp
                 // check hp, it is repeated code, but consider if we had 20 types of items, each with their own special effects, making an automated function for what seems to be 4 items at most is not so important
                 if (
                     trainerData[position].data.healthPoints !==
@@ -2293,6 +2301,7 @@ $(document).ready(() => {
                     // notice that we only process this line if the item can actually be used on the character
                 }
                 break;
+            default: break;
         }
     });
 
@@ -2365,6 +2374,8 @@ $(document).ready(() => {
                     default:
                         return 1;
                 }
+            
+            default: break;
         }
     }
 
@@ -2516,7 +2527,7 @@ $(document).ready(() => {
                 user,
                 data: trainerData,
             };
-            getdetails("/play/updateData", values).done((response) => {
+            ajax.getDetails("/play/updateData", values).done((response) => {
                 if (response.success !== undefined) {
                     $("#battleText")
                         .html("You win!")
@@ -2565,7 +2576,7 @@ $(document).ready(() => {
                 values = {
                     tempUser: rivalData[0].data.owner,
                 };
-                getdetails("/play/deleteTempChar", values).done(() => {});
+                ajax.getDetails("/play/deleteTempChar", values).done(() => {});
             }
             $("#battlePlayfield").attr("hidden", "true");
             $("#playField").removeAttr("hidden");
@@ -2705,7 +2716,7 @@ $(document).ready(() => {
                     // hit
                     rivalData[0].data.staminaPoints -= attack.cost;
                     // check if its THAT skill
-                    if (attack.id == 9) {
+                    if (attack.id === 9) {
                         trainerData[0].data.healthPoints = 0;
                         $("#battleText").html(
                             "The judgment has been casted. Sentence is death."
@@ -2889,100 +2900,8 @@ $(document).ready(() => {
             user,
             eventId,
         };
-        getdetails("/play/toggleCallable", values).done(() => {});
-    }
 
-    function turnBasedSkills(skillId, arrayData) {
-        switch (skillId) {
-            case 1:
-                // Salvo, +2 SPE
-                // turn-based
-                arrayData.data.speed += 2;
-                return `${arrayData.data.char_name  }'s speed raised by 2`;
-            case 2:
-                // Seal of Fantasy, +1 ATK
-                // turn-based
-                arrayData.data.atk += 1;
-                return `${arrayData.data.char_name  }'s attack raised by 1`;
-
-            case 6:
-                // Calmed, recover 5% hp each turn
-                // turn-based
-                if (arrayData.data.healthPoints < arrayData.data.maxHealth) {
-                    arrayData.data.healthPoints +=
-                        (arrayData.data.healthPoints * 5) / 100;
-                    return `${arrayData.data.char_name  } recovered health!`;
-                }
-
-                break;
-            
-            default: break;
-        }
-    }
-
-    function oneTimeSkills(skillId, arrayData) {
-        // skills that are triggered only when the character joins
-        switch (skillId) {
-            case 5:
-                // Judge of the Darkness, raise accuracy of hand of death for every over-level
-                // one-time based
-                // check whether this is the user or not to check the overlevel
-                if (arrayData.data.owner === user) {
-                    var overLevel =
-                        trainerData[0].data.level - rivalData[0].data.level;
-                    if (overLevel > 0) {
-                        // check if character has the move
-                        for (let i = 0; i < trainerData[0].moves.length; i++) {
-                            if (trainerData[0].moves[i].id === 9) {
-                                // hand of death
-                                trainerData[0].moves[i].accuracy +=
-                                    5 * overLevel;
-                            }
-                        }
-                    }
-                } else if (arrayData.data.owner !== user) {
-                    var overLevel =
-                        rivalData[0].data.level - trainerData[0].data.level;
-                    if (overLevel > 0) {
-                        // check if character has the move
-                        for (let i = 0; i < rivalData[0].moves.length; i++) {
-                            if (rival.moves[i].id === 9) {
-                                // hand of death
-                                rival.moves[i].accuracy += 5 * overLevel;
-                            }
-                        }
-                    }
-                }
-                break;
-                
-            default: break;
-        }
-    }
-
-    function actionBasedSkills(skillId, arrayData) {
-        // skills that require an special event to happen
-        switch (skillId) {
-            case 3:
-                // Necromancy, recover 50% hp when killed
-                arrayData.data.healthPoints = arrayData.data.healthMax / 2;
-                return " has risen from the dead once more.";
-            case 4:
-                // extracurricular class, get 50% more net exp gain TODO
-                break;
-            case 7:
-                // Traveller of the Storms, get 1x modifier against Electric
-                // action based
-                if (arrayData.data.owner === user) {
-                    if (rivalData[0].data.type === "Electric") {
-                        modifierAtk = 1;
-                    }
-                } else if (arrayData.data.owner !== user) {
-                    break;
-                }
-                break;
-            default:
-                break;
-        }
+        ajax.getDetails("/play/toggleCallable", values).done(() => {});
     }
 
     function reloadBattleData() {

@@ -1,18 +1,9 @@
+import * as ajax from "./shared/ajax";
 
 $(document).ready(() => {
     const user = $("#userGlobal").attr("value");
-    // TODO might be defining the ajax call too many times
-    $.ajax({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        url: "/load/loadMessages",
-        type: "post",
-        dataType: "json",
-        data: {
-            user,
-        },
-    }).done((response) => {
+
+    ajax.getDetails("/load/loadMessages").done((response) => {
         if (response.success !== undefined) {
             if (response.success > 0) {
                 $("#msgCount").append(response.success);
@@ -29,17 +20,7 @@ $(document).ready(() => {
     $("#inboxModal").on("show.bs.modal", () => {
         // first time we enter we retrieve a list to show all messages
 
-        $.ajax({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            url: "/load/loadMessagesList",
-            type: "post",
-            dataType: "json",
-            data: {
-                user,
-            },
-        }).done((response) => {
+        ajax.getDetails("/load/loadMessagesList").done((response) => {
             if (response.success !== undefined) {
                 $(".cont").remove();
                 const messageList = response.success;
@@ -116,17 +97,10 @@ $(document).ready(() => {
         $(".replyMessage").attr("id", messageId);
         // when entering here we search the message to show its values
 
-        $.ajax({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            url: "/load/loadIndividualMessage",
-            type: "post",
-            dataType: "json",
-            data: {
-                message: messageId,
-            },
-        }).done((response) => {
+				ajax.getDetails(
+					"/load/loadIndividualMessage",
+					{message: messageId}
+				).done((response) => {
             if (response.messageData !== undefined) {
                 const {messageData} = response;
                 $("#messageFrom").append(response.fromText + messageData.from);
