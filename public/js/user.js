@@ -1,11 +1,11 @@
-"use strict";
-$(document).ready(function () {
-    let user = $("#user").attr("value");
-    let userProfile = $("#userProfile").attr("value");
 
-    $("#formuploadajax").on("submit", function (e) {
+$(document).ready(() => {
+    const user = $("#user").attr("value");
+    const userProfile = $("#userProfile").attr("value");
+
+    $("#formuploadajax").on("submit", (e) => {
         e.preventDefault();
-        var formData = new FormData();
+        const formData = new FormData();
         formData.append("file", $("input[type=file]")[0].files[0]);
         formData.append("user", user);
         $.ajax({
@@ -19,7 +19,7 @@ $(document).ready(function () {
             cache: false,
             contentType: false,
             processData: false,
-        }).done(function (response) {
+        }).done((response) => {
             if (response.success !== undefined) {
                 alert(response.success);
                 window.location.reload();
@@ -31,8 +31,8 @@ $(document).ready(function () {
     });
 
     $(".editable").on("focusout", function (e) {
-        let message = this.innerText;
-        let field = this.id;
+        const message = this.innerText;
+        const field = this.id;
 
         if (message !== "") {
             $.ajax({
@@ -44,8 +44,8 @@ $(document).ready(function () {
                 url: "/edit/editUser",
                 type: "post",
                 dataType: "json",
-                data: { message: message, field: field, user: user },
-            }).done(function (response) {
+                data: { message, field, user },
+            }).done((response) => {
                 if (response.success !== undefined) {
                     alert(response.success);
                     window.location.reload();
@@ -57,11 +57,11 @@ $(document).ready(function () {
         }
     });
 
-    $(".sendMessage").on("click", function (event) {
-        let subject = $("#subjectMessage").val();
-        let message = $("#privateMessage").val();
-        let sender = user;
-        let receiver = userProfile;
+    $(".sendMessage").on("click", (event) => {
+        const subject = $("#subjectMessage").val();
+        const message = $("#privateMessage").val();
+        const sender = user;
+        const receiver = userProfile;
 
         if (message !== "") {
             $.ajax({
@@ -74,12 +74,12 @@ $(document).ready(function () {
                 type: "post",
                 dataType: "json",
                 data: {
-                    subject: subject,
-                    message: message,
-                    sender: sender,
-                    receiver: receiver,
+                    subject,
+                    message,
+                    sender,
+                    receiver,
                 },
-            }).done(function (response) {
+            }).done((response) => {
                 if (response.success !== undefined) {
                     alert(response.success);
                     window.location.reload();
@@ -91,10 +91,10 @@ $(document).ready(function () {
         }
     });
 
-    $(".reportButton").on("click", function (e) {
-        let message = $("#reportText").val();
+    $(".reportButton").on("click", (e) => {
+        const message = $("#reportText").val();
         if (message !== "") {
-            //ajax call to add report to the list
+            // ajax call to add report to the list
             $.ajax({
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -106,10 +106,10 @@ $(document).ready(function () {
                 dataType: "json",
                 data: {
                     reported: userProfile,
-                    message: message,
+                    message,
                     reporter: user,
                 },
-            }).done(function (response) {
+            }).done((response) => {
                 if (response.success !== undefined) {
                     alert(response.success);
                     $("#reportText").val("");

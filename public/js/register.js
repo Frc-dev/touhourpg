@@ -1,8 +1,8 @@
-"use strict";
 
-$(document).ready(function () {
-    //enters when page is loaded
-    let getdetails = function (values, link) {
+
+$(document).ready(() => {
+    // enters when page is loaded
+    const getdetails = function (values, link) {
         return $.ajax({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -14,33 +14,33 @@ $(document).ready(function () {
         });
     };
     $(".fieldForm").focusout(function () {
-        let field = this.id; //we will use this later for validation messages
-        let value = this.value; //value of the field we want to check
-        let values = {
-            field: field,
-            value: value,
+        const field = this.id; // we will use this later for validation messages
+        const {value} = this; // value of the field we want to check
+        const values = {
+            field,
+            value,
         };
 
         getdetails(values, "validateField")
-            .done(function (response) {
+            .done((response) => {
                 if (response.success != undefined) {
                     if (field !== "password-confirm" && field !== "password") {
-                        let div =
-                            "<span class='valid-feedback   " +
-                            field +
-                            "Valid'><strong>" +
-                            response.success +
-                            "</strong></span>";
-                        $("." + field + "Valid").remove(); //remove message
-                        $("#" + field)
+                        const div =
+                            `<span class='valid-feedback   ${ 
+                            field 
+                            }Valid'><strong>${ 
+                            response.success 
+                            }</strong></span>`;
+                        $(`.${  field  }Valid`).remove(); // remove message
+                        $(`#${  field}`)
                             .removeClass("is-invalid")
-                            .addClass("is-valid"); //change classes
-                        $(div).insertAfter("#" + field);
+                            .addClass("is-valid"); // change classes
+                        $(div).insertAfter(`#${  field}`);
                     } else {
-                        //check password and repeated password
-                        let pass = $("#password").val();
-                        let passConfirm = $("#password-confirm").val();
-                        /*if(!empty(passConf)){
+                        // check password and repeated password
+                        const pass = $("#password").val();
+                        const passConfirm = $("#password-confirm").val();
+                        /* if(!empty(passConf)){
                            if(campo === "password"){
                                //ya existe una pass para comparar y acabamos de cambiar la password principal
                                if(pass === value){
@@ -48,19 +48,19 @@ $(document).ready(function () {
 
                                }
                            }
-                       }*/
+                       } */
                         if (pass !== value) {
-                            //TODO untranslated strings
-                            let div =
+                            // TODO untranslated strings
+                            const div =
                                 "<span class='invalid-feedback passwordValid'><strong>Passwords don't match.</strong></span>";
-                            let div2 =
+                            const div2 =
                                 "<span class='invalid-feedback password-confirmValid'><strong>Passwords don't match.</strong></span>";
-                            $(".passwordValid").remove(); //remove message
+                            $(".passwordValid").remove(); // remove message
                             $(".password-confirmValid").remove();
 
                             $("#password")
                                 .removeClass("is-valid")
-                                .addClass("is-invalid"); //change class
+                                .addClass("is-invalid"); // change class
                             $("#password-confirm")
                                 .removeClass("is-valid")
                                 .addClass("is-invalid");
@@ -68,14 +68,14 @@ $(document).ready(function () {
                             $(div).insertAfter("#password");
                             $(div2).insertAfter("#password-confirm");
                         } else {
-                            let div =
+                            const div =
                                 "<span class='valid-feedback passwordValid'><strong>Valid password.</strong></span>";
-                            $(".passwordValid").remove(); //remove message
+                            $(".passwordValid").remove(); // remove message
                             $(".password-confirmValid").remove();
 
                             $("#password")
                                 .removeClass("is-invalid")
-                                .addClass("is-valid"); //change class
+                                .addClass("is-valid"); // change class
                             $("#password-confirm")
                                 .removeClass("is-invalid")
                                 .addClass("is-valid");
@@ -84,32 +84,32 @@ $(document).ready(function () {
                         }
                     }
                 } else {
-                    //error
-                    let div =
-                        "<span class='invalid-feedback " +
-                        field +
-                        "Valid'><strong>" +
-                        response.error +
-                        "</strong></span>";
-                    $("." + field + "Valid").remove();
-                    $("#" + field)
+                    // error
+                    const div =
+                        `<span class='invalid-feedback ${ 
+                        field 
+                        }Valid'><strong>${ 
+                        response.error 
+                        }</strong></span>`;
+                    $(`.${  field  }Valid`).remove();
+                    $(`#${  field}`)
                         .removeClass("is-valid")
                         .addClass("is-invalid");
-                    $(div).insertAfter("#" + field);
+                    $(div).insertAfter(`#${  field}`);
                 }
             })
-            .fail(function (jqXHR, textStatus, errorThrown) {
+            .fail((jqXHR, textStatus, errorThrown) => {
                 $("#textFail").remove();
                 $("<div/>", {
                     id: "textFail",
                     class: "text-danger",
                     // .. you can go on and add properties
-                    html: "Something went wrong: " + textStatus,
+                    html: `Something went wrong: ${  textStatus}`,
                 }).appendTo("body");
             });
     });
 
-    $(".nav-link").click(function (e) {
+    $(".nav-link").click((e) => {
         e.stopPropagation();
     });
 });
