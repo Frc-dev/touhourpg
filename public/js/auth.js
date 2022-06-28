@@ -1,7 +1,7 @@
-"use strict";
-$(document).ready(function () {
-    let user = $("#userGlobal").attr("value");
-    //TODO might be defining the ajax call too many times
+
+$(document).ready(() => {
+    const user = $("#userGlobal").attr("value");
+    // TODO might be defining the ajax call too many times
     $.ajax({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -10,9 +10,9 @@ $(document).ready(function () {
         type: "post",
         dataType: "json",
         data: {
-            user: user,
+            user,
         },
-    }).done(function (response) {
+    }).done((response) => {
         if (response.success !== undefined) {
             if (response.success > 0) {
                 $("#msgCount").append(response.success);
@@ -23,13 +23,11 @@ $(document).ready(function () {
             } else {
                 $("#msgCount").append(response.success);
             }
-        } else {
         }
     });
 
-    $("#inboxModal").on("show.bs.modal", function () {
-        //first time we enter we retrieve a list to show all messages
-        let user = $("#userGlobal").attr("value");
+    $("#inboxModal").on("show.bs.modal", () => {
+        // first time we enter we retrieve a list to show all messages
 
         $.ajax({
             headers: {
@@ -39,38 +37,38 @@ $(document).ready(function () {
             type: "post",
             dataType: "json",
             data: {
-                user: user,
+                user,
             },
-        }).done(function (response) {
+        }).done((response) => {
             if (response.success !== undefined) {
                 $(".cont").remove();
-                let messageList = response.success;
-                $.each(messageList, function (i) {
+                const messageList = response.success;
+                $.each(messageList, (i) => {
                     $("#listMessage").append(
-                        "<div class='cont'>" +
-                            "<div class='inboxId' hidden>" +
-                            messageList[i].id +
-                            "</div>" +
-                            "<a class='inboxSubject float-left' id =" +
-                            messageList[i].id +
-                            " data-id =" +
-                            messageList[i].id +
-                            " href='' data-toggle='modal' data-target='#privateMessageModal'>" +
-                            messageList[i].subject +
-                            "</a>" +
-                            "<div class='float-right'>" +
-                            messageList[i].created_at +
-                            "</div>" +
-                            "<br><a class='inboxFrom'>" +
-                            messageList[i].from +
-                            "</a>" +
-                            "</div>"
+                        `${"<div class='cont'>" +
+                            "<div class='inboxId' hidden>"}${ 
+                            messageList[i].id 
+                            }</div>` +
+                            `<a class='inboxSubject float-left' id =${ 
+                            messageList[i].id 
+                            } data-id =${ 
+                            messageList[i].id 
+                            } href='' data-toggle='modal' data-target='#privateMessageModal'>${ 
+                            messageList[i].subject 
+                            }</a>` +
+                            `<div class='float-right'>${ 
+                            messageList[i].created_at 
+                            }</div>` +
+                            `<br><a class='inboxFrom'>${ 
+                            messageList[i].from 
+                            }</a>` +
+                            `</div>`
                     );
 
-                    $(".inboxFrom").attr("href", "/u/" + messageList[i].from);
+                    $(".inboxFrom").attr("href", `/u/${  messageList[i].from}`);
 
                     if (messageList[i].status === "UNREAD") {
-                        $(".inboxSubject#" + messageList[i].id)
+                        $(`.inboxSubject#${  messageList[i].id}`)
                             .attr("data-id", messageList[i].id)
                             .css({
                                 "font-weight": "bold",
@@ -82,14 +80,14 @@ $(document).ready(function () {
                             "border-left": "5px solid blue",
                         });
                     } else {
-                        $(".inboxSubject#" + messageList[i].id)
+                        $(`.inboxSubject#${  messageList[i].id}`)
                             .attr("data-id", messageList[i].id)
                             .css({
                                 color: "black",
                             });
                     }
                 });
-                //add style and positioning
+                // add style and positioning
                 $(".cont").css({
                     border: "1px solid",
                     "background-color": "beige",
@@ -105,18 +103,18 @@ $(document).ready(function () {
                     color: "gray",
                 });
             } else {
-                //TODO why is this empty
+                // TODO why is this empty
             }
         });
     });
 
-    $("#privateMessageModal").on("show.bs.modal", function (e) {
+    $("#privateMessageModal").on("show.bs.modal", (e) => {
         $("#inboxModal").modal("hide");
 
-        var messageId = $(e.relatedTarget).data("id");
-        //$(this).find('.modal-body input').val(bookId)
+        const messageId = $(e.relatedTarget).data("id");
+        // $(this).find('.modal-body input').val(bookId)
         $(".replyMessage").attr("id", messageId);
-        //when entering here we search the message to show its values
+        // when entering here we search the message to show its values
 
         $.ajax({
             headers: {
@@ -128,9 +126,9 @@ $(document).ready(function () {
             data: {
                 message: messageId,
             },
-        }).done(function (response) {
+        }).done((response) => {
             if (response.messageData !== undefined) {
-                let messageData = response.messageData;
+                const {messageData} = response;
                 $("#messageFrom").append(response.fromText + messageData.from);
                 $("#messageSubject").append(
                     response.subjectText + messageData.subject
@@ -138,12 +136,12 @@ $(document).ready(function () {
                 $("#messageDate").append(messageData.created_at);
                 $("#messageContent").append(messageData.message);
             } else {
-                //TODO why is this empty
+                // TODO why is this empty
             }
         });
     });
 
-    $("#privateMessageModal").on("hide.bs.modal", function () {
+    $("#privateMessageModal").on("hide.bs.modal", () => {
         $("#messageFrom").html("");
         $("#messageSubject").html("");
         $("#messageDate").html("");
@@ -152,8 +150,8 @@ $(document).ready(function () {
         $("#inboxModal").modal("show");
     });
 
-    $(".replyMessage").on("click", function (e) {
-        var messageId = $(this).attr("id");
+    $(".replyMessage").on("click", () => {
+        const messageId = $(this).attr("id");
 
         $("#messageFrom").html("");
         $("#messageSubject").html("");
@@ -174,26 +172,25 @@ $(document).ready(function () {
             data: {
                 message: messageId,
             },
-        }).done(function (response) {
+        }).done((response) => {
             if (response.messageData !== undefined) {
-                let messageData = response.messageData;
+                const {messageData} = response;
                 $("#replyTo").append(response.toText + messageData.from);
                 $("#replySubjectLabel").append(response.subjectText);
-                $("#replySubject").attr("value", "RE: " + messageData.subject);
+                $("#replySubject").attr("value", `RE: ${  messageData.subject}`);
                 $("#replyMessageLabel").append(response.messageText);
                 $("#replyMessage").append(messageData.message);
 
                 $("#replyTo").attr("sender", messageData.from);
-            } else {
             }
         });
     });
 
-    $(".sendMessage").on("click", function (event) {
-        let subject = $("#replySubject").val();
-        let message = $("#replyMessage").val();
-        let sender = user;
-        let receiver = $("#replyTo").attr("sender");
+    $(".sendMessage").on("click", () => {
+        const subject = $("#replySubject").val();
+        const message = $("#replyMessage").val();
+        const sender = user;
+        const receiver = $("#replyTo").attr("sender");
 
         if (message !== "") {
             $.ajax({
@@ -206,12 +203,12 @@ $(document).ready(function () {
                 type: "post",
                 dataType: "json",
                 data: {
-                    subject: subject,
-                    message: message,
-                    sender: sender,
-                    receiver: receiver,
+                    subject,
+                    message,
+                    sender,
+                    receiver,
                 },
-            }).done(function (response) {
+            }).done((response) => {
                 if (response.success !== undefined) {
                     alert(response.success);
                     $("#sendMessageModal").modal("hide");

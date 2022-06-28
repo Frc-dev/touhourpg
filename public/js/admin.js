@@ -1,71 +1,62 @@
-"use strict";
-$(document).ready(function () {
-    let admin = $("#userGlobal").attr("value");
+import * as ajax from "./shared/ajax";
+import * as modalShow from "./admin/modal";
 
-    function getdetails(link, values) {
-        return $.ajax({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            url: link,
-            type: "post",
-            dataType: "json",
-            data: values,
-        });
-    }
+$(document).ready(() => {
+    const admin = $("#userGlobal").attr("value");
+    let reportId = 0;
 
-    $(".icon").on("click", function () {
-        let user = $(this).attr("user");
-        let modalType = $(this).attr("data-target");
+    $(".icon").on("click", () => {
+        const user = $(this).attr("user");
+        const modalType = $(this).attr("data-target");
 
-        if (modalType === "#bansModal") {
-            $("#bansModal").on("show.bs.modal", bansModalShow(user));
-        } else if (modalType === "#reportsModal") {
-            $("#reportsModal").on("show.bs.modal", reportModalShow(user));
-        } else if (modalType === "#historyModal") {
-            $("#reportsModal").on("show.bs.modal", historyModalShow(user));
+        switch (modalType) {
+            case "#bansModal":
+                $("#bansModal").on("show.bs.modal", modalShow.bansModal(user));
+                break;
+            case "#reportsModal":
+                $("#reportsModal").on("show.bs.modal", modalShow.reportModal(user));
+                break;
+            case "#historyModal":
+                $("#reportsModal").on("show.bs.modal", modalShow.historyModal(user));
+                break;
+            default:
+                break;
         }
     });
 
-    var reportId = 0;
-
-    $(document).on("click", ".inboxSubject", function () {
-        //receive report id for ajax call
+    $(document).on("click", ".inboxSubject", () => {
+        // receive report id for ajax call
         reportId = $(this).attr("data-id");
 
         $("#reportHandlerModal").modal("show");
-        //close previous modal and empty data
+        // close previous modal and empty data
         $("#reportList").html("");
         $("#reportsModal").modal("hide");
-        //ajax call to get full report data
-        let values = {
-            reportId: reportId,
+        // ajax call to get full report data
+        const values = {
+            reportId,
         };
 
-        getdetails("/admin/getIndividualReport", values).done(function (
-            response
-        ) {
+        ajax.getDetails("/admin/getIndividualReport", values).done((response) => {
             if (response.success !== undefined) {
-                let report = response.success[0];
+                const report = response.success[0];
 
                 $("#reportContent").append(report.reason);
             } else {
-                //TODO proper error logging
+                // TODO proper error logging
             }
         });
     });
 
-    $("#reportProcess").on("click", function () {
+    $("#reportProcess").on("click", () => {
         if ($("#reportHandlingText").val() !== "") {
-            //process report and add reason of report
-            let values = {
-                reportId: reportId,
+            // process report and add reason of report
+            const values = {
+                reportId,
                 reportAction: $("#reportHandlingText").val(),
                 processedBy: admin,
             };
-            getdetails("/admin/processReport", values).done(function (
-                response
-            ) {
+            ajax.getDetails("/admin/processReport", values).done((response) => {
                 if (response.success !== "undefined") {
                     alert(response.success);
                     window.location.reload();
@@ -76,18 +67,18 @@ $(document).ready(function () {
         }
     });
 
-    $("#banProcess").on("click", function () {
+    $("#banProcess").on("click", () => {
         if ($("#banHandlingText").val() !== "") {
-            //process ban and add reason of unban
-            let banId = $(this).attr("banId");
-            let banAction = $("#banHandlingText").val();
+            // process ban and add reason of unban
+            const banId = $(this).attr("banId");
+            const banAction = $("#banHandlingText").val();
 
-            let values = {
-                banId: banId,
-                banAction: banAction,
+            const values = {
+                banId,
+                banAction,
                 processedBy: admin,
             };
-            getdetails("/admin/processBan", values).done(function (response) {
+            ajax.getDetails("/admin/processBan", values).done((response) => {
                 if (response.success !== "undefined") {
                     alert(response.success);
                     window.location.reload();
@@ -98,18 +89,18 @@ $(document).ready(function () {
         }
     });
 
-    $("#warningAdd").on("click", function () {
+    $("#warningAdd").on("click", () => {
         if ($("#warningAddText").val() !== "") {
-            //add warning
-            let user = $(this).attr("userId");
-            let warningAction = $("#warningAddText").val();
+            // add warning
+            const user = $(this).attr("userId");
+            const warningAction = $("#warningAddText").val();
 
-            let values = {
+            const values = {
                 userId: user,
-                warningAction: warningAction,
+                warningAction,
                 processedBy: admin,
             };
-            getdetails("/admin/addWarning", values).done(function (response) {
+            ajax.getDetails("/admin/addWarning", values).done((response) => {
                 if (response.success !== "undefined") {
                     alert(response.success);
                     window.location.reload();
@@ -120,18 +111,19 @@ $(document).ready(function () {
         }
     });
 
-    $("#banAdd").on("click", function () {
+    $("#banAdd").on("click",() => {
         if ($("#banAddText").val() !== "") {
-            //process ban and add reason of unban
-            let user = $(this).attr("userId");
-            let banAction = $("#banAddText").val();
+            // process ban and add reason of unban
+            const user = $(this).attr("userId");
+            const banAction = $("#banAddText").val();
 
-            let values = {
+            const values = {
                 userId: user,
-                banAction: banAction,
+                banAction,
                 processedBy: admin,
             };
-            getdetails("/admin/addBan", values).done(function (response) {
+
+            ajax.getDetails("/admin/addBan", values).done((response) => {
                 if (response.success !== undefined) {
                     alert(response.success);
                     window.location.reload();
@@ -142,180 +134,8 @@ $(document).ready(function () {
         }
     });
 
-    $("#reportHandlerModal").on("hide.bs.modal", function () {
+    $("#reportHandlerModal").on("hide.bs.modal", () => {
         $("#reportHandlingText").val("");
         $("#reportContent").html("");
     });
-
-    function reportModalShow(user) {
-        let userTab =
-            "<div class='float-left ml-1 userReportName'>" + user + "</div>";
-        //ajax call to receive all pending reports
-        let values = {
-            user: user,
-        };
-        getdetails("/admin/getReports", values).done(function (response) {
-            if (response.success !== "undefined") {
-                $(userTab).detach();
-                $(".cont").css("");
-                $(".cont").empty();
-
-                $(userTab).insertAfter("#reportHeaderMsg");
-                let reportList = response.success;
-                $.each(reportList, function (i) {
-                    let reportDate = new Date(reportList[i].created_at);
-                    let subject = reportList[i].reason.substring(0, 15);
-                    if (reportList[i].reason.length > 15) {
-                        subject += "...";
-                    }
-                    $("#reportList").append(
-                        "<div class='cont' style='border: 1px solid'>" +
-                            "<div class='reportId' hidden>" +
-                            reportList[i].id +
-                            "</div>" +
-                            "<a class='inboxSubject float-left' id =" +
-                            reportList[i].id +
-                            " data-id =" +
-                            reportList[i].id +
-                            " href='' data-toggle='modal' data-target='#reportHandlerModal'>" +
-                            subject +
-                            "</a>" +
-                            "<div class='float-right'>" +
-                            reportDate.toLocaleDateString() +
-                            "     " +
-                            reportDate.toLocaleTimeString() +
-                            "</div>" +
-                            "<br><a class='inboxFrom'>" +
-                            reportList[i].reported +
-                            "</a>" +
-                            "</div><br>"
-                    );
-                });
-            }
-        });
-    }
-
-    function bansModalShow(user) {
-        let userTab =
-            "<div class='float-left ml-1 userBanName'>" + user + "</div>";
-        //ajax call to receive all bans
-        let values = {
-            user: user,
-        };
-        getdetails("/admin/getBans", values).done(function (response) {
-            if (response.success !== "undefined") {
-                $(userTab).detach();
-                $(".cont").css("");
-                $(".cont").empty();
-                $(userTab).insertAfter("#banHeaderMsg");
-                let banList = response.success;
-                $.each(banList, function (i) {
-                    let banDate = new Date(banList[i].created_at);
-
-                    if (banList[i].status === "Active") {
-                        $("#banContent").append(
-                            "<div class='cont' style='border: 1px solid'>" +
-                                "<div class='reportId' hidden>" +
-                                banList[i].id +
-                                "</div>" +
-                                "<div class='float-right'>" +
-                                banDate.toLocaleDateString() +
-                                "     " +
-                                banDate.toLocaleTimeString() +
-                                "</div>" +
-                                "<a class='banBy'>" +
-                                banList[i].bannedBy +
-                                "</a><BR> " +
-                                "<a class='banReason'>" +
-                                banList[i].reason +
-                                "</a>" +
-                                "</div><br>"
-                        );
-
-                        $("#banProcess").attr("banId", banList[i].id);
-                    }
-                });
-            }
-        });
-    }
-
-    function historyModalShow(user) {
-        let userTab =
-            "<div class='float-left ml-1 userHistoryName'>" + user + "</div>";
-        //ajax call to receive the historical for an user
-        let values = {
-            user: user,
-        };
-        getdetails("/admin/getHistory", values).done(function (response) {
-            if (response !== "undefined") {
-                $(userTab).detach();
-
-                $(userTab).insertAfter("#historyHeaderMsg");
-                let banList = response.bans;
-                let warningList = response.warnings;
-
-                if (warningList.length === 0) {
-                    $(".warningHistory").append(
-                        "<div class='cont mb-4'><i>No warnings found</i></div>"
-                    );
-                }
-
-                if (banList.length === 0) {
-                    $(".banHistory").append(
-                        "<div class='cont mb-4'><i>No bans found</i></div>"
-                    );
-                }
-                $.each(banList, function (i) {
-                    let banDate = new Date(banList[i].created_at);
-                    $(".banHistory").append(
-                        "<div class='cont' style='border: 1px solid'>" +
-                            "<div class='reportId' hidden>" +
-                            banList[i].id +
-                            "</div>" +
-                            "<div class='float-right'>" +
-                            banDate.toLocaleDateString() +
-                            "     " +
-                            banDate.toLocaleTimeString() +
-                            "</div>" +
-                            "<a class='banStatus'>" +
-                            banList[i].status +
-                            "</a><BR> " +
-                            "<a class='banBy'>" +
-                            banList[i].bannedBy +
-                            "</a><BR> " +
-                            "<a class='banReason'>" +
-                            banList[i].reason +
-                            "</a>" +
-                            "</div><br>"
-                    );
-                    $(".banStatus").addClass(banList[i].status);
-                });
-
-                $.each(warningList, function (i) {
-                    let warningDate = new Date(warningList[i].created_at);
-
-                    $(".warningHistory").append(
-                        "<div class='cont' style='border: 1px solid'>" +
-                            "<div class='warningId' hidden>" +
-                            warningList[i].id +
-                            "</div>" +
-                            "<div class='float-right'>" +
-                            warningDate.toLocaleDateString() +
-                            "     " +
-                            warningDate.toLocaleTimeString() +
-                            "</div>" +
-                            "<a class='warnedBy'>" +
-                            warningList[i].warnedBy +
-                            "</a><BR> " +
-                            "<a class='warnReason'>" +
-                            warningList[i].reason +
-                            "</a>" +
-                            "</div><br>"
-                    );
-                });
-                $("#banAdd").attr("userId", user);
-                $("#warningAdd").attr("userId", user);
-            }
-        });
-    }
 });
