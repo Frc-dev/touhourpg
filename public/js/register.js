@@ -1,19 +1,8 @@
-
+import * as ajax from "./shared/ajax";
 
 $(document).ready(() => {
-    // enters when page is loaded
-    const getdetails = function (values, link) {
-        return $.ajax({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            url: link,
-            method: "POST",
-            data: values,
-            dataType: "json",
-        });
-    };
-    $(".fieldForm").focusout(function () {
+
+    $(".fieldForm").on("focusout", () => {
         const field = this.id; // we will use this later for validation messages
         const {value} = this; // value of the field we want to check
         const values = {
@@ -21,9 +10,9 @@ $(document).ready(() => {
             value,
         };
 
-        getdetails(values, "validateField")
+        ajax.getDetails(values, "validateField")
             .done((response) => {
-                if (response.success != undefined) {
+                if (response.success !== undefined) {
                     if (field !== "password-confirm" && field !== "password") {
                         const div =
                             `<span class='valid-feedback   ${ 
@@ -39,7 +28,9 @@ $(document).ready(() => {
                     } else {
                         // check password and repeated password
                         const pass = $("#password").val();
-                        const passConfirm = $("#password-confirm").val();
+                        // we don't know if this var will be used but it was in prod
+                        // const passConfirm = $("#password-confirm").val();
+
                         /* if(!empty(passConf)){
                            if(campo === "password"){
                                //ya existe una pass para comparar y acabamos de cambiar la password principal
@@ -98,18 +89,18 @@ $(document).ready(() => {
                     $(div).insertAfter(`#${  field}`);
                 }
             })
-            .fail((jqXHR, textStatus, errorThrown) => {
+            .fail((textStatus) => {
                 $("#textFail").remove();
                 $("<div/>", {
                     id: "textFail",
                     class: "text-danger",
                     // .. you can go on and add properties
-                    html: `Something went wrong: ${  textStatus}`,
+                    html: `Something went wrong: ${ textStatus }`,
                 }).appendTo("body");
             });
     });
 
-    $(".nav-link").click((e) => {
+    $(".nav-link").on("click", (e) => {
         e.stopPropagation();
     });
 });

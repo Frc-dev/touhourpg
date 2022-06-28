@@ -1,5 +1,5 @@
 
-$(document).ready(() => {
+$(document).on("ready", () => {
     const user = $("#user").attr("value");
     const userProfile = $("#userProfile").attr("value");
 
@@ -30,7 +30,7 @@ $(document).ready(() => {
         });
     });
 
-    $(".editable").on("focusout", function (e) {
+    $(".editable").on("focusout", () => {
         const message = this.innerText;
         const field = this.id;
 
@@ -57,7 +57,7 @@ $(document).ready(() => {
         }
     });
 
-    $(".sendMessage").on("click", (event) => {
+    $(".sendMessage").on("click", () => {
         const subject = $("#subjectMessage").val();
         const message = $("#privateMessage").val();
         const sender = user;
@@ -91,7 +91,7 @@ $(document).ready(() => {
         }
     });
 
-    $(".reportButton").on("click", (e) => {
+    $(".reportButton").on("click", () => {
         const message = $("#reportText").val();
         if (message !== "") {
             // ajax call to add report to the list

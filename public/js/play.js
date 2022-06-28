@@ -46,12 +46,53 @@ $(document).ready(() => {
         user,
     };
 
+    function startConversation(values) {
+        $("#npcSpritePosition").removeAttr("hidden");
+        $("#textBox").removeAttr("hidden");
+        getdetails("/play/getConversation", values).done((response) => {
+            if (response.success !== undefined) {
+                conversationArray = response.success;
+                convArrayIndex = 0;
+                // load first panel of the scene
+                $("#textBox").html(
+                    conversationArray[convArrayIndex].lineContent
+                );
+                // load first sprite
+                $("#npcSpritePosition").empty();
+                if (conversationArray[convArrayIndex].animation !== null) {
+                    $("#npcSpritePosition").append(
+                        `<img src='animations/${ 
+                            conversationArray[convArrayIndex].character 
+                            }/${ 
+                            conversationArray[convArrayIndex].animation 
+                            }.png'>`
+                    );
+                } else {
+                    $("#npcSpritePosition").append(
+                        `<img src='animations/${ 
+                            conversationArray[convArrayIndex].character 
+                            }/1.png'>`
+                    );
+                }
+
+                // process event
+                if (conversationArray[convArrayIndex].eventTrigger !== null) {
+                    processEvent(
+                        conversationArray[convArrayIndex].eventTrigger
+                    );
+                }
+                controlEnvironment = "conversation";
+            }
+        });
+    }
+
     function processEvent(eventId) {
         eventId = parseInt(eventId, 10);
         switch (eventId) {
             case 1:
                 // add picture to playfield
-                var img = "/sprites/characters/Marisa/sprite.png";
+                // TODO magic string
+                let img = "/sprites/characters/Marisa/sprite.png";
                 $("#playField").append(
                     `<img id='event1Img' src='${  img  }'>`
                 );
@@ -469,7 +510,7 @@ $(document).ready(() => {
                     case 65:
                         // A button, advance conversation
                         // get conversation array and process it
-                        convArrayIndex++;
+                        convArrayIndex += 1;
                         if (convArrayIndex >= conversationArray.length) {
                             // conversation is finished
                             controlEnvironment = "field";
@@ -537,15 +578,17 @@ $(document).ready(() => {
                                 }
                             });
                         }
+                        break;
+                    default: break;
                 }
                 break;
             case "field":
-                const movement = 10;
-                const top = parseInt(
+                let movement = 10;
+                let top = parseInt(
                     $("#userSprite").children().first().css("top"),
                     10
                 );
-                const left = parseInt(
+                let left = parseInt(
                     $("#userSprite").children().first().css("left"),
                     10
                 );
@@ -812,6 +855,19 @@ $(document).ready(() => {
         }
     });
 
+    function getUserData(user) {
+        // get values of user when its changed so we can use it in javascript functions
+        const values = {
+            user,
+        };
+        getdetails("/play/getData", values).done((response) => {
+            if (response.success !== undefined) {
+                userData = response.success;
+            }
+        });
+    }
+
+
     function processMap(currentMap, nextMap) {
         const values = {
             map: nextMap,
@@ -841,7 +897,7 @@ $(document).ready(() => {
                 img.onload = function () {
                     context.drawImage(img, 0, 0);
                 };
-                img.src = `${mapsUrl  }/${  id  }/${  event}`;
+                img.src = `${ mapsUrl }/${  id  }/${  event}`;
 
                 // load sprite
                 $("#userSprite").append(
@@ -870,58 +926,6 @@ $(document).ready(() => {
         });
     }
 
-    function getUserData(user) {
-        // get values of user when its changed so we can use it in javascript functions
-        const values = {
-            user,
-        };
-        getdetails("/play/getData", values).done((response) => {
-            if (response.success !== undefined) {
-                userData = response.success;
-            }
-        });
-    }
-
-    function startConversation(values) {
-        $("#npcSpritePosition").removeAttr("hidden");
-        $("#textBox").removeAttr("hidden");
-        getdetails("/play/getConversation", values).done((response) => {
-            if (response.success !== undefined) {
-                conversationArray = response.success;
-                convArrayIndex = 0;
-                // load first panel of the scene
-                $("#textBox").html(
-                    conversationArray[convArrayIndex].lineContent
-                );
-                // load first sprite
-                $("#npcSpritePosition").empty();
-                if (conversationArray[convArrayIndex].animation !== null) {
-                    $("#npcSpritePosition").append(
-                        `<img src='animations/${ 
-                            conversationArray[convArrayIndex].character 
-                            }/${ 
-                            conversationArray[convArrayIndex].animation 
-                            }.png'>`
-                    );
-                } else {
-                    $("#npcSpritePosition").append(
-                        `<img src='animations/${ 
-                            conversationArray[convArrayIndex].character 
-                            }/1.png'>`
-                    );
-                }
-
-                // process event
-                if (conversationArray[convArrayIndex].eventTrigger !== null) {
-                    processEvent(
-                        conversationArray[convArrayIndex].eventTrigger
-                    );
-                }
-                controlEnvironment = "conversation";
-            }
-        });
-    }
-
     $(".characterButton").on("click", () => {
         $("#characterModal").modal("show");
         // load characters from DB and show them in format
@@ -936,9 +940,9 @@ $(document).ready(() => {
             response
         ) => {
             if (response.success !== undefined) {
-                charData = response.success;
+                const charData = response.success;
                 if (response.moveList !== undefined) {
-                    moveList = response.moveList;
+                    const {moveList} = response;
                 }
                 // clear div
                 $("#characterList").html("");
@@ -1141,9 +1145,9 @@ $(document).ready(() => {
             .html("Sorting...");
         if (positionArray.length === 2) {
             let canSort = true;
-            for (let i = 0; i < positionArray.length; i++) {
+            for (let i = 0; i < positionArray.length; i+=1) {
                 if (i === 0) {
-                    var num = positionArray[i];
+                    const num = positionArray[i];
                 } else if (positionArray[i] === num) {
                         // clicked the same button twice
                         $(".buttonPos")
@@ -1170,9 +1174,9 @@ $(document).ready(() => {
                     response
                 ) => {
                     if (response.success !== undefined) {
-                        charData = response.success;
+                        const charData = response.success;
                         if (response.moveList !== undefined) {
-                            moveList = response.moveList;
+                            const moveList = response.moveList;
                         }
                         // clear div
                         $("#characterList").html("");
@@ -1574,7 +1578,7 @@ $(document).ready(() => {
             response
         ) => {
             if (response.success !== undefined) {
-                charData = response.success;
+                const charData = response.success;
                 // clear div
                 $("#itemUseList").html("");
                 // append data to div
@@ -2479,6 +2483,7 @@ $(document).ready(() => {
                     : (rivalData[0].data.healthPoints +=
                           (rivalData[0].data.healthPoints * 50) / 100);
                 return "'s health restored.";
+            default: break;
         }
     }
 
@@ -2560,12 +2565,7 @@ $(document).ready(() => {
                 values = {
                     tempUser: rivalData[0].data.owner,
                 };
-                getdetails("/play/deleteTempChar", values).done((
-                    response
-                ) => {
-                    if (response.success !== undefined) {
-                    }
-                });
+                getdetails("/play/deleteTempChar", values).done(() => {});
             }
             $("#battlePlayfield").attr("hidden", "true");
             $("#playField").removeAttr("hidden");
@@ -2577,7 +2577,7 @@ $(document).ready(() => {
     function attackProcess(attackerId, positionId) {
         if (attackerId === "user") {
             // our turn
-            // atk formula: userattack+atkPow*(100/(100+rivaldefense))
+            // atk formula: userAttack+atkPow*(100/(100+rivalDefense))
             // check if its a power-based attack
             if (trainerData[0].moves[positionId].power > 0) {
                 var attackFormula =
@@ -2613,10 +2613,10 @@ $(document).ready(() => {
                     trainerData[0].data.staminaPoints -=
                         trainerData[0].moves[positionId].cost;
                     // check if its THAT skill
-                    if (trainerData[0].moves[positionId].id == 9) {
+                    if (trainerData[0].moves[positionId].id === 9) {
                         rivalData[0].data.healthPoints = 0;
                         $("#battleText").html(
-                            "The judgment has been casted. Sentence is death."
+                            "The judgment has been cast. Sentence is death."
                         );
                     } else if (
                         rivalData[0].data.healthPoints - attackFormula <
@@ -2789,7 +2789,7 @@ $(document).ready(() => {
                                         2000,
                                         () => {
                                             if (!canAttack) {
-                                                // ur dead lol
+                                                // dead
                                                 switchFaintedChar();
                                             } else {
                                                 // turn over
@@ -2829,7 +2829,7 @@ $(document).ready(() => {
                     $("#battleText").fadeToggle(2000, () => {
                         // our turn
                         if (!canAttack) {
-                            // ur dead lol
+                            // dead
                             switchFaintedChar();
                         } else {
                             attackProcess("user", idAction);
@@ -2877,19 +2877,19 @@ $(document).ready(() => {
                         $("#buttonBar").removeAttr("hidden");
                     }
                 });
+            break;
+
+            default: break;
         }
     }
 
+    // what is this for?
     function toggleCall(user, eventId) {
         values = {
             user,
             eventId,
         };
-        getdetails("/play/toggleCallable", values).done((response) => {
-            if (response.success !== undefined) {
-            } else {
-            }
-        });
+        getdetails("/play/toggleCallable", values).done(() => {});
     }
 
     function turnBasedSkills(skillId, arrayData) {
@@ -2915,6 +2915,8 @@ $(document).ready(() => {
                 }
 
                 break;
+            
+            default: break;
         }
     }
 
@@ -2952,6 +2954,8 @@ $(document).ready(() => {
                     }
                 }
                 break;
+                
+            default: break;
         }
     }
 
@@ -2973,7 +2977,10 @@ $(document).ready(() => {
                         modifierAtk = 1;
                     }
                 } else if (arrayData.data.owner !== user) {
+                    break;
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -3049,10 +3056,11 @@ $(document).ready(() => {
             (rivalData[0].data.speedMax / 100) * rivalData[0].data.level;
     }
 
-    Array.prototype.swap = function (x, y) {
-        const b = this[x];
-        this[x] = this[y];
-        this[y] = b;
-        return this;
-    };
+    // TODO can't native swap do the job?
+    // Array.prototype.swap = function (x, y) {
+    //    const b = this[x];
+    //    this[x] = this[y];
+    //    this[y] = b;
+    //    return this;
+    // };
 });
