@@ -1,4 +1,4 @@
-This is an old project I am currently restoring and refactoring. The website is offline until release.
+This is an old project I am currently restoring and refactoring. The website is offline until release. Most of the code here is from my student days and thus is outdated.
 
 <h1>TouhouRPG</h1>
 
