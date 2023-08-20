@@ -1,82 +1,27 @@
 <!DOCTYPE html>
+<!-- TODO: i suspect the lang attribute is useless here -->
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>TouhouRPG</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-    @extends('layouts.app')
-
-    @section('content')
-
-
-            <div class="content">
-                <div class="title m-b-md">
-                    TouhouRPG
-                </div>
-                <h4>by Francis Rodríguez</h4>
-
-            </div>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+    <title>TouhouRPG</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link href="css/welcome.css" rel="stylesheet">
+</head>
+<body>
+@extends('layouts.app')
+@section('content')
+    <div class="text-center">
+        <!-- TODO: what does "m-b-md" even mean, I know it's margin-bottom but md should be used as a breakpoint, this does not define how much margin is given either -->
+        <div class="title">
+            TouhouRPG
         </div>
-    </body>
+        <h4>
+            <!-- TODO: refactor all lang to use assoc arrays instead of jsons, way less cluttered IMO -->
+            @lang('messages.welcome.author')
+            <!-- TODO: why does ms-1 not work? check syntax or if bootstrap is being loaded properly -->
+            <a href="https://github.com/Frc-dev" class="ms-1 text-decoration-none">(frc-dev)</a>
+        </h4>
+    </div>
 @endsection
+</body>
 </html>
