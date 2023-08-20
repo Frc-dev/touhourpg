@@ -41,30 +41,28 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 @auth
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav me-auto">
                         @if(Auth::user()->role == "ADMIN")
                             <a href="/adminpanel">@lang('Admin panel')</a>
                         @endif
-                        <a class="ml-3" href="/play">@lang('Play')</a>
+                        <a class="ms-3" href="/play">@lang('Play')</a>
                     </ul>
                 @endauth
                 <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">@lang("Login")</a>
+                            <a class="nav-link" href="{{ route('login') }}">@lang("messages.header.login")</a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">@lang('Register')</a>
+                                <a class="nav-link" href="{{ route('register') }}">@lang('messages.header.register')</a>
                             </li>
                         @endif
-
                     @else
                         <!-- user-related info -->
-                        <img alt="profilePicture" src="{{ asset('pfp/'.Auth::user()->profilePicture) }}" width="50px"
-                             height="50px">
+                        <img alt="profilePicture" class="w-50px" src="{{ asset('pfp/'.Auth::user()->profilePicture) }}">
                         <a href="/u/{{Auth::user()->nick}}" class="nick">{{Auth::user()->nick}}</a>
                         <div id="msgDiv">
                             <input type="image" src="/open-iconic/svg/envelope-closed.svg" class="inboxIcon mr-1"
