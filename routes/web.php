@@ -5,9 +5,11 @@ use App\Character;
 use App\Report;
 use App\User;
 use App\Warning;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\AnonymousComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +23,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('components.welcome');
 });
 
 Route::get('/welcome', function () {
-    return view('welcome');
+    return view('components.welcome');
 });
 
 Auth::routes();

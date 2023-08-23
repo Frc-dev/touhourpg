@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
 
 class WelcomeTest extends TestCase

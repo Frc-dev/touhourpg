@@ -9,8 +9,13 @@ html, body {
     margin: 0;
 }
 
-.full-height {
-    height: 100vh;
+.welcome-box {
+    background-color: black;
+    color: white;
+}
+
+.title {
+    color: turquoise;
 }
 
 .flex-center {
