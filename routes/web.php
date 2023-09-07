@@ -23,11 +23,11 @@ use Illuminate\View\AnonymousComponent;
 */
 
 Route::get('/', function () {
-    return view('components.welcome');
+    return view('welcome');
 });
 
 Route::get('/welcome', function () {
-    return view('components.welcome');
+    return view('welcome');
 });
 
 Auth::routes();
