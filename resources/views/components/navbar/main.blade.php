@@ -22,13 +22,9 @@
             <ul class="navbar-nav ms-auto">
                 <!-- Authentication Links -->
                 @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">@lang("messages.header.login")</a>
-                    </li>
+                    <x-navbar.login></x-navbar.login>
                     @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">@lang('messages.header.register')</a>
-                        </li>
+                        <x-navbar.register></x-navbar.register>
                     @endif
                 @else
                     <!-- user-related info -->
@@ -111,22 +107,10 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
-
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                @lang('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                  style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
+                        <x-navbar.logout></x-navbar.logout>
                     </li>
                 @endguest
-                <x-locale_switcher></x-locale_switcher>
+                <x-navbar.locale_switcher></x-navbar.locale_switcher>
             </ul>
         </div>
     </div>

@@ -24,23 +24,23 @@ export function reportModal(user) {
                 }
                 $("#reportList").append(
                     `${"<div class='cont' style='border: 1px solid'>" +
-                        "<div class='reportId' hidden>"}${ 
-                        reportList[i].id 
+                        "<div class='reportId' hidden>"}${
+                        reportList[i].id
                         }</div>` +
-                        `<a class='inboxSubject float-left' id =${ 
-                        reportList[i].id 
-                        } data-id =${ 
-                        reportList[i].id 
-                        } href='' data-toggle='modal' data-target='#reportHandlerModal'>${ 
-                        subject 
+                        `<a class='inboxSubject float-left' id =${
+                        reportList[i].id
+                        } data-id =${
+                        reportList[i].id
+                        } href='' data-toggle='modal' data-target='#reportHandlerModal'>${
+                        subject
                         }</a>` +
-                        `<div class='float-right'>${ 
-                        reportDate.toLocaleDateString() 
-                        }     ${ 
-                        reportDate.toLocaleTimeString() 
+                        `<div class='float-right'>${
+                        reportDate.toLocaleDateString()
+                        }     ${
+                        reportDate.toLocaleTimeString()
                         }</div>` +
-                        `<br><a class='inboxFrom'>${ 
-                        reportList[i].reported 
+                        `<br><a class='inboxFrom'>${
+                        reportList[i].reported
                         }</a>` +
                         `</div><br>`
                 );
@@ -56,7 +56,7 @@ export function bansModal(user) {
     const values = {
         user,
     };
-    
+
     ajax.getDetails("/admin/getBans", values).done((response) => {
         if (response.success !== "undefined") {
             $(userTab).detach();
@@ -70,19 +70,19 @@ export function bansModal(user) {
                 if (banList[i].status === "Active") {
                     $("#banContent").append(
                         `${"<div class='cont' style='border: 1px solid'>" +
-                            "<div class='reportId' hidden>"}${ 
-                            banList[i].id 
+                            "<div class='reportId' hidden>"}${
+                            banList[i].id
                             }</div>` +
-                            `<div class='float-right'>${ 
-                            banDate.toLocaleDateString() 
-                            }     ${ 
-                            banDate.toLocaleTimeString() 
+                            `<div class='float-right'>${
+                            banDate.toLocaleDateString()
+                            }     ${
+                            banDate.toLocaleTimeString()
                             }</div>` +
-                            `<a class='banBy'>${ 
-                            banList[i].bannedBy 
+                            `<a class='banBy'>${
+                            banList[i].bannedBy
                             }</a><BR> ` +
-                            `<a class='banReason'>${ 
-                            banList[i].reason 
+                            `<a class='banReason'>${
+                            banList[i].reason
                             }</a>` +
                             `</div><br>`
                     );
@@ -125,22 +125,22 @@ export function historyModal(user) {
                 const banDate = new Date(banList[i].created_at);
                 $(".banHistory").append(
                     `${"<div class='cont' style='border: 1px solid'>" +
-                        "<div class='reportId' hidden>"}${ 
-                        banList[i].id 
+                        "<div class='reportId' hidden>"}${
+                        banList[i].id
                         }</div>` +
-                        `<div class='float-right'>${ 
-                        banDate.toLocaleDateString() 
-                        }     ${ 
-                        banDate.toLocaleTimeString() 
+                        `<div class='float-right'>${
+                        banDate.toLocaleDateString()
+                        }     ${
+                        banDate.toLocaleTimeString()
                         }</div>` +
-                        `<a class='banStatus'>${ 
-                        banList[i].status 
+                        `<a class='banStatus'>${
+                        banList[i].status
                         }</a><BR> ` +
-                        `<a class='banBy'>${ 
-                        banList[i].bannedBy 
+                        `<a class='banBy'>${
+                        banList[i].bannedBy
                         }</a><BR> ` +
-                        `<a class='banReason'>${ 
-                        banList[i].reason 
+                        `<a class='banReason'>${
+                        banList[i].reason
                         }</a>` +
                         `</div><br>`
                 );
@@ -152,19 +152,19 @@ export function historyModal(user) {
 
                 $(".warningHistory").append(
                     `${"<div class='cont' style='border: 1px solid'>" +
-                        "<div class='warningId' hidden>"}${ 
-                        warningList[i].id 
+                        "<div class='warningId' hidden>"}${
+                        warningList[i].id
                         }</div>` +
-                        `<div class='float-right'>${ 
-                        warningDate.toLocaleDateString() 
-                        }     ${ 
-                        warningDate.toLocaleTimeString() 
+                        `<div class='float-right'>${
+                        warningDate.toLocaleDateString()
+                        }     ${
+                        warningDate.toLocaleTimeString()
                         }</div>` +
-                        `<a class='warnedBy'>${ 
-                        warningList[i].warnedBy 
+                        `<a class='warnedBy'>${
+                        warningList[i].warnedBy
                         }</a><BR> ` +
-                        `<a class='warnReason'>${ 
-                        warningList[i].reason 
+                        `<a class='warnReason'>${
+                        warningList[i].reason
                         }</a>` +
                         `</div><br>`
                 );

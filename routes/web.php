@@ -24,15 +24,13 @@ use Illuminate\View\AnonymousComponent;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/welcome', function () {
     return view('welcome');
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('validateField','Auth\RegisterController@validateField');
 

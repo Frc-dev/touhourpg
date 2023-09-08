@@ -27,21 +27,21 @@ $(document).ready(() => {
                 $.each(messageList, (i) => {
                     $("#listMessage").append(
                         `${"<div class='cont'>" +
-                            "<div class='inboxId' hidden>"}${ 
-                            messageList[i].id 
+                            "<div class='inboxId' hidden>"}${
+                            messageList[i].id
                             }</div>` +
-                            `<a class='inboxSubject float-left' id =${ 
-                            messageList[i].id 
-                            } data-id =${ 
-                            messageList[i].id 
-                            } href='' data-toggle='modal' data-target='#privateMessageModal'>${ 
-                            messageList[i].subject 
+                            `<a class='inboxSubject float-left' id =${
+                            messageList[i].id
+                            } data-id =${
+                            messageList[i].id
+                            } href='' data-toggle='modal' data-target='#privateMessageModal'>${
+                            messageList[i].subject
                             }</a>` +
-                            `<div class='float-right'>${ 
-                            messageList[i].created_at 
+                            `<div class='float-right'>${
+                            messageList[i].created_at
                             }</div>` +
-                            `<br><a class='inboxFrom'>${ 
-                            messageList[i].from 
+                            `<br><a class='inboxFrom'>${
+                            messageList[i].from
                             }</a>` +
                             `</div>`
                     );

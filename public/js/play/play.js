@@ -2,7 +2,7 @@ import * as ajax from "../shared/ajax";
 import * as battle from "./battle/battle";
 import * as map from "./map/map";
 
-// warning: this code is very WET, not very SOLID and thus it SMELLS REALLY BAD (get it?), proceed with caution and keep in mind I wrote this in 2 weeks fresh out of school 
+// warning: this code is very WET, not very SOLID and thus it SMELLS REALLY BAD (get it?), proceed with caution and keep in mind I wrote this in 2 weeks fresh out of school
 // it will eventually be good though, consider this a legacy code in progress of being refactored and reworked.
 
 $(document).ready(() => {
@@ -58,16 +58,16 @@ $(document).ready(() => {
                 $("#npcSpritePosition").empty();
                 if (conversationArray[convArrayIndex].animation !== null) {
                     $("#npcSpritePosition").append(
-                        `<img src='animations/${ 
-                            conversationArray[convArrayIndex].character 
-                            }/${ 
-                            conversationArray[convArrayIndex].animation 
+                        `<img src='animations/${
+                            conversationArray[convArrayIndex].character
+                            }/${
+                            conversationArray[convArrayIndex].animation
                             }.png'>`
                     );
                 } else {
                     $("#npcSpritePosition").append(
-                        `<img src='animations/${ 
-                            conversationArray[convArrayIndex].character 
+                        `<img src='animations/${
+                            conversationArray[convArrayIndex].character
                             }/1.png'>`
                     );
                 }
@@ -104,12 +104,12 @@ $(document).ready(() => {
                 const src1 = "/sprites/player/card/M.png";
                 const src2 = "/sprites/player/card/F.png";
                 const button1 =
-                    `<input type='image' src='${ 
-                    src1 
+                    `<input type='image' src='${
+                    src1
                     }' class='btTxt genderButton tutorialSprite' id='maleSprite'>`;
                 const button2 =
-                    `<input type='image' src='${ 
-                    src2 
+                    `<input type='image' src='${
+                    src2
                     }' class='btTxt genderButton tutorialSprite' id='femaleSprite'>`;
 
                 $("#playField").append(button1);
@@ -223,8 +223,8 @@ $(document).ready(() => {
                 // 2 functions needed ->
                 // getBattleData()-> receives data to get specific data from trainers, so it must receive the trainers id
                 // startBattle() -> this one sets up all the non-dynamic elements that are non-specific to a battle and receives the battle data (arrays) which have already been sent
-                trainerId = userData.nick;
-                rivalId = "#rival_1";
+                var trainerId = userData.nick;
+                var rivalId = "#rival_1";
                 combatType = "trainer";
                 getBattleData(trainerId, rivalId);
 
@@ -240,8 +240,8 @@ $(document).ready(() => {
             case 38:
                 // route 1 trainers battle
                 controlEnvironment = "battle";
-                trainerId = userData.nick;
-                rivalId = "#route1_trainer1";
+                var trainerId = userData.nick;
+                var rivalId = "#route1_trainer1";
                 combatType = "trainer";
                 getBattleData(trainerId, rivalId);
 
@@ -249,8 +249,8 @@ $(document).ready(() => {
             case 39:
                 // gym leader Aya's battle
                 controlEnvironment = "battle";
-                trainerId = userData.nick;
-                rivalId = "#gymleader_1";
+                var trainerId = userData.nick;
+                var rivalId = "#gymleader_1";
                 combatType = "trainer";
                 getBattleData(trainerId, rivalId);
 
@@ -311,19 +311,19 @@ $(document).ready(() => {
                             conversationArray[convArrayIndex].animation !== null
                         ) {
                             $("#npcSpritePosition").append(
-                                `<img src='animations/${ 
+                                `<img src='animations/${
                                     conversationArray[convArrayIndex]
-                                        .character 
-                                    }/${ 
+                                        .character
+                                    }/${
                                     conversationArray[convArrayIndex]
-                                        .animation 
+                                        .animation
                                     }.png'>`
                             );
                         } else {
                             $("#npcSpritePosition").append(
-                                `<img src='animations/${ 
+                                `<img src='animations/${
                                     conversationArray[convArrayIndex]
-                                        .character 
+                                        .character
                                     }/1.png'>`
                             );
                         }
@@ -373,12 +373,12 @@ $(document).ready(() => {
 
                         // load sprite
                         $("#userSprite").append(
-                            `<img src=${ 
-                                playerSpritesUrl 
-                                }/${ 
-                                userData.sprite 
-                                }/${ 
-                                response.position.direction 
+                            `<img src=${
+                                playerSpritesUrl
+                                }/${
+                                userData.sprite
+                                }/${
+                                response.position.direction
                                 }-idle.png>`
                         );
                         moveDirection = "up";
@@ -546,22 +546,22 @@ $(document).ready(() => {
                                             .animation !== null
                                     ) {
                                         $("#npcSpritePosition").append(
-                                            `<img src='animations/${ 
+                                            `<img src='animations/${
                                                 conversationArray[
                                                     convArrayIndex
-                                                ].character 
-                                                }/${ 
+                                                ].character
+                                                }/${
                                                 conversationArray[
                                                     convArrayIndex
-                                                ].animation 
+                                                ].animation
                                                 }.png'>`
                                         );
                                     } else {
                                         $("#npcSpritePosition").append(
-                                            `<img src='animations/${ 
+                                            `<img src='animations/${
                                                 conversationArray[
                                                     convArrayIndex
-                                                ].character 
+                                                ].character
                                                 }/1.png'>`
                                         );
                                     }
@@ -613,10 +613,10 @@ $(document).ready(() => {
                                     $("#userSprite")
                                         .html("")
                                         .append(
-                                            `<img src=${ 
-                                                playerSpritesUrl 
-                                                }/${ 
-                                                userData.sprite 
+                                            `<img src=${
+                                                playerSpritesUrl
+                                                }/${
+                                                userData.sprite
                                                 }/up-move.png>`
                                         );
                                     moveIdle = false;
@@ -625,10 +625,10 @@ $(document).ready(() => {
                                     $("#userSprite")
                                         .html("")
                                         .append(
-                                            `<img src=${ 
-                                                playerSpritesUrl 
-                                                }/${ 
-                                                userData.sprite 
+                                            `<img src=${
+                                                playerSpritesUrl
+                                                }/${
+                                                userData.sprite
                                                 }/up-idle.png>`
                                         );
                                     moveIdle = true;
@@ -638,10 +638,10 @@ $(document).ready(() => {
                                 $("#userSprite")
                                     .html("")
                                     .append(
-                                        `<img src=${ 
-                                            playerSpritesUrl 
-                                            }/${ 
-                                            userData.sprite 
+                                        `<img src=${
+                                            playerSpritesUrl
+                                            }/${
+                                            userData.sprite
                                             }/up-idle.png>`
                                     );
                                 moveDirection = "up";
@@ -671,10 +671,10 @@ $(document).ready(() => {
                                     $("#userSprite")
                                         .html("")
                                         .append(
-                                            `<img src=${ 
-                                                playerSpritesUrl 
-                                                }/${ 
-                                                userData.sprite 
+                                            `<img src=${
+                                                playerSpritesUrl
+                                                }/${
+                                                userData.sprite
                                                 }/left-move.png>`
                                         );
                                     moveIdle = false;
@@ -683,10 +683,10 @@ $(document).ready(() => {
                                     $("#userSprite")
                                         .html("")
                                         .append(
-                                            `<img src=${ 
-                                                playerSpritesUrl 
-                                                }/${ 
-                                                userData.sprite 
+                                            `<img src=${
+                                                playerSpritesUrl
+                                                }/${
+                                                userData.sprite
                                                 }/left-idle.png>`
                                         );
                                     moveIdle = true;
@@ -696,10 +696,10 @@ $(document).ready(() => {
                                 $("#userSprite")
                                     .html("")
                                     .append(
-                                        `<img src=${ 
-                                            playerSpritesUrl 
-                                            }/${ 
-                                            userData.sprite 
+                                        `<img src=${
+                                            playerSpritesUrl
+                                            }/${
+                                            userData.sprite
                                             }/left-idle.png>`
                                     );
                                 moveDirection = "left";
@@ -728,10 +728,10 @@ $(document).ready(() => {
                                     $("#userSprite")
                                         .html("")
                                         .append(
-                                            `<img src=${ 
-                                                playerSpritesUrl 
-                                                }/${ 
-                                                userData.sprite 
+                                            `<img src=${
+                                                playerSpritesUrl
+                                                }/${
+                                                userData.sprite
                                                 }/right-move.png>`
                                         );
                                     moveIdle = false;
@@ -740,10 +740,10 @@ $(document).ready(() => {
                                     $("#userSprite")
                                         .html("")
                                         .append(
-                                            `<img src=${ 
-                                                playerSpritesUrl 
-                                                }/${ 
-                                                userData.sprite 
+                                            `<img src=${
+                                                playerSpritesUrl
+                                                }/${
+                                                userData.sprite
                                                 }/right-idle.png>`
                                         );
                                     moveIdle = true;
@@ -753,10 +753,10 @@ $(document).ready(() => {
                                 $("#userSprite")
                                     .html("")
                                     .append(
-                                        `<img src=${ 
-                                            playerSpritesUrl 
-                                            }/${ 
-                                            userData.sprite 
+                                        `<img src=${
+                                            playerSpritesUrl
+                                            }/${
+                                            userData.sprite
                                             }/right-idle.png>`
                                     );
                                 moveDirection = "right";
@@ -785,10 +785,10 @@ $(document).ready(() => {
                                     $("#userSprite")
                                         .html("")
                                         .append(
-                                            `<img src=${ 
-                                                playerSpritesUrl 
-                                                }/${ 
-                                                userData.sprite 
+                                            `<img src=${
+                                                playerSpritesUrl
+                                                }/${
+                                                userData.sprite
                                                 }/down-move.png>`
                                         );
                                     moveIdle = false;
@@ -797,10 +797,10 @@ $(document).ready(() => {
                                     $("#userSprite")
                                         .html("")
                                         .append(
-                                            `<img src=${ 
-                                                playerSpritesUrl 
-                                                }/${ 
-                                                userData.sprite 
+                                            `<img src=${
+                                                playerSpritesUrl
+                                                }/${
+                                                userData.sprite
                                                 }/down-idle.png>`
                                         );
                                     moveIdle = true;
@@ -810,10 +810,10 @@ $(document).ready(() => {
                                 $("#userSprite")
                                     .html("")
                                     .append(
-                                        `<img src=${ 
-                                            playerSpritesUrl 
-                                            }/${ 
-                                            userData.sprite 
+                                        `<img src=${
+                                            playerSpritesUrl
+                                            }/${
+                                            userData.sprite
                                             }/down-idle.png>`
                                     );
                                 moveDirection = "down";
@@ -902,12 +902,12 @@ $(document).ready(() => {
 
                 // load sprite
                 $("#userSprite").append(
-                    `<img src=${ 
-                        playerSpritesUrl 
-                        }/${ 
-                        userData.sprite 
-                        }/${ 
-                        response.position.direction 
+                    `<img src=${
+                        playerSpritesUrl
+                        }/${
+                        userData.sprite
+                        }/${
+                        response.position.direction
                         }-idle.png>`
                 );
                 moveDirection = "up";
@@ -951,8 +951,8 @@ $(document).ready(() => {
                 $.each(charData, (i) => {
                     // get sprite id
                     const img =
-                        `/sprites/characters/${ 
-                        charData[i].char_name 
+                        `/sprites/characters/${
+                        charData[i].char_name
                         }/sprite.png`;
                     const exp = charData[i].exp - (charData[i].exp / 1000) * 1000;
                     const lvl = charData[i].level;
@@ -964,73 +964,73 @@ $(document).ready(() => {
                     let moveDiv = "";
                     $.each(moveList[i], (j) => {
                         moveDiv +=
-                            `<tr><td>${ 
-                            moveList[i][j].type 
-                            }</td><td>${ 
-                            moveList[i][j].name 
-                            }</td><td>${ 
-                            moveList[i][j].description 
-                            }</td><td>${ 
-                            moveList[i][j].power 
-                            }</td><td>${ 
-                            moveList[i][j].accuracy 
-                            }</td><td>${ 
-                            moveList[i][j].cost 
+                            `<tr><td>${
+                            moveList[i][j].type
+                            }</td><td>${
+                            moveList[i][j].name
+                            }</td><td>${
+                            moveList[i][j].description
+                            }</td><td>${
+                            moveList[i][j].power
+                            }</td><td>${
+                            moveList[i][j].accuracy
+                            }</td><td>${
+                            moveList[i][j].cost
                             }</td>`;
                     });
 
                     $("#characterList").append(
-                        `<div class='buttonPos' id='${ 
-                            charData[i].position 
-                            }'><button value='${ 
-                            charData[i].position 
+                        `<div class='buttonPos' id='${
+                            charData[i].position
+                            }'><button value='${
+                            charData[i].position
                             }' class='float-right btn btn-default btn-success'>Sort</button></div>`
                     );
                     $("#characterList").append(
                         `${"<div class=cont><div class='leftrow'>" +
-                            "<img class='spriteImg' src='"}${ 
-                            img 
+                            "<img class='spriteImg' src='"}${
+                            img
                             }'>` +
-                            `<div class='toprow'><div class='charName'>${ 
-                            charData[i].char_name 
-                            }<div class='charLevel'>Lv.${ 
-                            lvl 
-                            }<div class='exp'>Exp:${ 
-                            exp 
+                            `<div class='toprow'><div class='charName'>${
+                            charData[i].char_name
+                            }<div class='charLevel'>Lv.${
+                            lvl
+                            }<div class='exp'>Exp:${
+                            exp
                             }/1000</div>` +
                             `</div></div></div>` +
-                            `<div class='middlerow'><div class='health'>HP:${ 
-                            charData[i].healthPointsCurrent 
-                            }/${ 
-                            charData[i].healthpoints 
+                            `<div class='middlerow'><div class='health'>HP:${
+                            charData[i].healthPointsCurrent
+                            }/${
+                            charData[i].healthpoints
                             }</div>` +
-                            `<div class='stamina'>ST:${ 
-                            charData[i].staminaPointsCurrent 
-                            }/${ 
-                            charData[i].staminapoints 
+                            `<div class='stamina'>ST:${
+                            charData[i].staminaPointsCurrent
+                            }/${
+                            charData[i].staminapoints
                             }</div>` +
                             `</div>` +
-                            `<div class='thirdrow'><div>${ 
-                            charData[i].type 
+                            `<div class='thirdrow'><div>${
+                            charData[i].type
                             }</div></div>` +
-                            `<div class='fourthrow'><div>${ 
-                            charData[i].skill_name 
-                            }: ${ 
-                            charData[i].skill_desc 
+                            `<div class='fourthrow'><div>${
+                            charData[i].skill_name
+                            }: ${
+                            charData[i].skill_desc
                             }</div></div>` +
                             `<div class='rightrow'><table class='table-bordered'>` +
-                            `<tr><td class='firstTD'>ATK:</td><td>${ 
-                            atk 
+                            `<tr><td class='firstTD'>ATK:</td><td>${
+                            atk
                             }</td></tr>` +
-                            `<tr><td class='firstTD'>DEF:</td><td>${ 
-                            def 
+                            `<tr><td class='firstTD'>DEF:</td><td>${
+                            def
                             }</td></tr>` +
-                            `<tr><td class='firstTD'>SPE:</td><td>${ 
-                            spe 
+                            `<tr><td class='firstTD'>SPE:</td><td>${
+                            spe
                             }</td></tr>` +
                             `</table></div></div>` +
-                            `<div class='moverow'><table class='table-bordered'><th>Type</th><th>Name</th><th>Description</th><th>Power</th><th>Accuracy</th><th>Cost</th>${ 
-                            moveDiv 
+                            `<div class='moverow'><table class='table-bordered'><th>Type</th><th>Name</th><th>Description</th><th>Power</th><th>Accuracy</th><th>Cost</th>${
+                            moveDiv
                             }</table></div></div>`
                     );
                 });
@@ -1061,26 +1061,26 @@ $(document).ready(() => {
                         `/sprites/items/${  itemList[i].name  }/sprite.png`;
                     const useButton =
                         itemList[i].category !== "battle_item"
-                            ? `<button id='${ 
-                              itemList[i].id 
+                            ? `<button id='${
+                              itemList[i].id
                               }'class='btn-success btn btn-default itemUse'>Use</button>`
                             : "";
 
                     itemDiv +=
-                        `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${ 
-                        img 
+                        `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${
+                        img
                         }'></td>` +
-                        `<td>${ 
-                        itemList[i].name 
+                        `<td>${
+                        itemList[i].name
                         }</td>` +
-                        `<td>${ 
-                        itemList[i].desc 
+                        `<td>${
+                        itemList[i].desc
                         }</td>` +
-                        `<td>${ 
-                        itemList[i].stock 
+                        `<td>${
+                        itemList[i].stock
                         }</td>` +
-                        `<td>${ 
-                        useButton 
+                        `<td>${
+                        useButton
                         }</td></tr>`;
                 });
 
@@ -1090,8 +1090,8 @@ $(document).ready(() => {
                         "<th>Name</th>" +
                         "<th>Desc</th>" +
                         "<th>Stock</th>" +
-                        "<tbody>"}${ 
-                        itemDiv 
+                        "<tbody>"}${
+                        itemDiv
                         }</tbody></table>`
                 );
             }
@@ -1114,17 +1114,17 @@ $(document).ready(() => {
 
                 const cardDiv =
                     `${"<div id='cardCont'>" +
-                    "<div id='cardSpriteDiv'><img id='cardSprite' src='"}${ 
-                    img 
+                    "<div id='cardSpriteDiv'><img id='cardSprite' src='"}${
+                    img
                     }'></div>` +
-                    `<div id='cardName'>${ 
-                    data.nick 
+                    `<div id='cardName'>${
+                    data.nick
                     }</div>` +
-                    `<div id='cardBalance'>Balance: ${ 
-                    data.balance 
+                    `<div id='cardBalance'>Balance: ${
+                    data.balance
                     }</div>` +
-                    `<div id='cardBadges'>Badges: ${ 
-                    data.progress 
+                    `<div id='cardBadges'>Badges: ${
+                    data.progress
                     }</div>` +
                     `</div>`;
 
@@ -1187,8 +1187,8 @@ $(document).ready(() => {
                         $.each(charData, (i) => {
                             // get sprite id
                             const img =
-                                `/sprites/characters/${ 
-                                charData[i].char_name 
+                                `/sprites/characters/${
+                                charData[i].char_name
                                 }/sprite.png`;
                             const exp =
                                 charData[i].exp -
@@ -1202,73 +1202,73 @@ $(document).ready(() => {
                             let moveDiv = "";
                             $.each(moveList[i], (j) => {
                                 moveDiv +=
-                                    `<tr><td>${ 
-                                    moveList[i][j].type 
-                                    }</td><td>${ 
-                                    moveList[i][j].name 
-                                    }</td><td>${ 
-                                    moveList[i][j].description 
-                                    }</td><td>${ 
-                                    moveList[i][j].power 
-                                    }</td><td>${ 
-                                    moveList[i][j].accuracy 
-                                    }</td><td>${ 
-                                    moveList[i][j].cost 
+                                    `<tr><td>${
+                                    moveList[i][j].type
+                                    }</td><td>${
+                                    moveList[i][j].name
+                                    }</td><td>${
+                                    moveList[i][j].description
+                                    }</td><td>${
+                                    moveList[i][j].power
+                                    }</td><td>${
+                                    moveList[i][j].accuracy
+                                    }</td><td>${
+                                    moveList[i][j].cost
                                     }</td>`;
                             });
 
                             $("#characterList").append(
-                                `<div class='buttonPos' id='${ 
-                                    charData[i].position 
-                                    }'><button value='${ 
-                                    charData[i].position 
+                                `<div class='buttonPos' id='${
+                                    charData[i].position
+                                    }'><button value='${
+                                    charData[i].position
                                     }' class='float-right btn btn-default btn-success'>Sort</button></div>`
                             );
                             $("#characterList").append(
                                 `${"<div class=cont><div class='leftrow'>" +
-                                    "<img class='spriteImg' src='"}${ 
-                                    img 
+                                    "<img class='spriteImg' src='"}${
+                                    img
                                     }'>` +
-                                    `<div class='toprow'><div class='charName'>${ 
-                                    charData[i].char_name 
-                                    }<div class='charLevel'>Lv.${ 
-                                    lvl 
-                                    }<div class='exp'>Exp:${ 
-                                    exp 
+                                    `<div class='toprow'><div class='charName'>${
+                                    charData[i].char_name
+                                    }<div class='charLevel'>Lv.${
+                                    lvl
+                                    }<div class='exp'>Exp:${
+                                    exp
                                     }/1000</div>` +
                                     `</div></div></div>` +
-                                    `<div class='middlerow'><div class='health'>HP:${ 
-                                    charData[i].healthPointsCurrent 
-                                    }/${ 
-                                    charData[i].healthpoints 
+                                    `<div class='middlerow'><div class='health'>HP:${
+                                    charData[i].healthPointsCurrent
+                                    }/${
+                                    charData[i].healthpoints
                                     }</div>` +
-                                    `<div class='stamina'>ST:${ 
-                                    charData[i].staminaPointsCurrent 
-                                    }/${ 
-                                    charData[i].staminapoints 
+                                    `<div class='stamina'>ST:${
+                                    charData[i].staminaPointsCurrent
+                                    }/${
+                                    charData[i].staminapoints
                                     }</div>` +
                                     `</div>` +
-                                    `<div class='thirdrow'><div>${ 
-                                    charData[i].type 
+                                    `<div class='thirdrow'><div>${
+                                    charData[i].type
                                     }</div></div>` +
-                                    `<div class='fourthrow'><div>${ 
-                                    charData[i].skill_name 
-                                    }: ${ 
-                                    charData[i].skill_desc 
+                                    `<div class='fourthrow'><div>${
+                                    charData[i].skill_name
+                                    }: ${
+                                    charData[i].skill_desc
                                     }</div></div>` +
                                     `<div class='rightrow'><table class='table-bordered'>` +
-                                    `<tr><td class='firstTD'>ATK:</td><td>${ 
-                                    atk 
+                                    `<tr><td class='firstTD'>ATK:</td><td>${
+                                    atk
                                     }</td></tr>` +
-                                    `<tr><td class='firstTD'>DEF:</td><td>${ 
-                                    def 
+                                    `<tr><td class='firstTD'>DEF:</td><td>${
+                                    def
                                     }</td></tr>` +
-                                    `<tr><td class='firstTD'>SPE:</td><td>${ 
-                                    spe 
+                                    `<tr><td class='firstTD'>SPE:</td><td>${
+                                    spe
                                     }</td></tr>` +
                                     `</table></div></div>` +
-                                    `<div class='moverow'><table class='table-bordered'><th>Type</th><th>Name</th><th>Description</th><th>Power</th><th>Accuracy</th><th>Cost</th>${ 
-                                    moveDiv 
+                                    `<div class='moverow'><table class='table-bordered'><th>Type</th><th>Name</th><th>Description</th><th>Power</th><th>Accuracy</th><th>Cost</th>${
+                                    moveDiv
                                     }</table></div></div>`
                             );
                         });
@@ -1323,33 +1323,33 @@ $(document).ready(() => {
                         `/sprites/items/${  itemList[i].name  }/sprite.png`;
 
                     shopDiv +=
-                        `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${ 
-                        img 
+                        `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${
+                        img
                         }'></td>` +
-                        `<td>${ 
-                        itemList[i].name 
+                        `<td>${
+                        itemList[i].name
                         }</td>` +
-                        `<td>${ 
-                        itemList[i].description 
+                        `<td>${
+                        itemList[i].description
                         }</td>` +
-                        `<td>${ 
-                        itemList[i].buyPrice 
+                        `<td>${
+                        itemList[i].buyPrice
                         }</td>` +
-                        `<td><input type='number' class='itemBuyNum'><button id='${ 
-                        itemList[i].id 
+                        `<td><input type='number' class='itemBuyNum'><button id='${
+                        itemList[i].id
                         }'class='btn-success btn btn-default buyItemButton'>Buy</button></td></tr>`;
                 });
 
                 $("#shopBuyList").append(
-                    `Balance: ${ 
-                        response.balance.balance 
+                    `Balance: ${
+                        response.balance.balance
                         }<table class='table-bordered'>` +
                         `<th></th>` +
                         `<th>Name</th>` +
                         `<th>Description</th>` +
                         `<th>Buy price</th>` +
-                        `<tbody>${ 
-                        shopDiv 
+                        `<tbody>${
+                        shopDiv
                         }</tbody></table>`
                 );
             }
@@ -1379,39 +1379,39 @@ $(document).ready(() => {
                         `/sprites/items/${  itemList[i].name  }/sprite.png`;
 
                     shopDiv +=
-                        `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${ 
-                        img 
+                        `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${
+                        img
                         }'></td>` +
-                        `<td>${ 
-                        itemList[i].name 
+                        `<td>${
+                        itemList[i].name
                         }</td>` +
-                        `<td>${ 
-                        itemList[i].description 
+                        `<td>${
+                        itemList[i].description
                         }</td>` +
-                        `<td>${ 
-                        itemList[i].stock 
+                        `<td>${
+                        itemList[i].stock
                         }</td>` +
-                        `<td>${ 
-                        itemList[i].sellPrice 
+                        `<td>${
+                        itemList[i].sellPrice
                         }</td>` +
-                        `<td><input type='number' max='${ 
-                        itemList[i].stock 
-                        }' class='itemBuyNum'><button id='${ 
-                        itemList[i].name 
+                        `<td><input type='number' max='${
+                        itemList[i].stock
+                        }' class='itemBuyNum'><button id='${
+                        itemList[i].name
                         }'class='btn-success btn btn-default sellItemButton'>Sell</button></td></tr>`;
                 });
 
                 $("#shopSellList").append(
-                    `Balance: ${ 
-                        response.balance.balance 
+                    `Balance: ${
+                        response.balance.balance
                         }<table class='table-bordered'>` +
                         `<th></th>` +
                         `<th>Name</th>` +
                         `<th>Desc</th>` +
                         `<th>Stock</th>` +
                         `<th>Sell price</th>` +
-                        `<tbody>${ 
-                        shopDiv 
+                        `<tbody>${
+                        shopDiv
                         }</tbody></table>`
                 );
             }
@@ -1450,38 +1450,38 @@ $(document).ready(() => {
                             $("#shopBuyList").empty();
                             $.each(itemList, (i) => {
                                 const img =
-                                    `/sprites/items/${ 
-                                    itemList[i].name 
+                                    `/sprites/items/${
+                                    itemList[i].name
                                     }/sprite.png`;
 
                                 shopDiv +=
-                                    `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${ 
-                                    img 
+                                    `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${
+                                    img
                                     }'></td>` +
-                                    `<td>${ 
-                                    itemList[i].name 
+                                    `<td>${
+                                    itemList[i].name
                                     }</td>` +
-                                    `<td>${ 
-                                    itemList[i].description 
+                                    `<td>${
+                                    itemList[i].description
                                     }</td>` +
-                                    `<td>${ 
-                                    itemList[i].buyPrice 
+                                    `<td>${
+                                    itemList[i].buyPrice
                                     }</td>` +
-                                    `<td><input type='number' class='itemBuyNum'><button id='${ 
-                                    itemList[i].id 
+                                    `<td><input type='number' class='itemBuyNum'><button id='${
+                                    itemList[i].id
                                     }'class='btn-success btn btn-default buyItemButton'>Buy</button></td></tr>`;
                             });
 
                             $("#shopBuyList").append(
-                                `Balance: ${ 
-                                    response.balance.balance 
+                                `Balance: ${
+                                    response.balance.balance
                                     }<table class='table-bordered'>` +
                                     `<th></th>` +
                                     `<th>Name</th>` +
                                     `<th>Description</th>` +
                                     `<th>Buy price</th>` +
-                                    `<tbody>${ 
-                                    shopDiv 
+                                    `<tbody>${
+                                    shopDiv
                                     }</tbody></table>`
                             );
                         }
@@ -1526,42 +1526,42 @@ $(document).ready(() => {
                             $("#shopSellList").empty();
                             $.each(itemList, (i) => {
                                 const img =
-                                    `/sprites/items/${ 
-                                    itemList[i].name 
+                                    `/sprites/items/${
+                                    itemList[i].name
                                     }/sprite.png`;
 
                                 shopDiv +=
-                                    `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${ 
-                                    img 
+                                    `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${
+                                    img
                                     }'></td>` +
-                                    `<td>${ 
-                                    itemList[i].name 
+                                    `<td>${
+                                    itemList[i].name
                                     }</td>` +
-                                    `<td>${ 
-                                    itemList[i].description 
+                                    `<td>${
+                                    itemList[i].description
                                     }</td>` +
-                                    `<td>${ 
-                                    itemList[i].stock 
+                                    `<td>${
+                                    itemList[i].stock
                                     }</td>` +
-                                    `<td>${ 
-                                    itemList[i].sellPrice 
+                                    `<td>${
+                                    itemList[i].sellPrice
                                     }</td>` +
-                                    `<td><input type='number' class='itemBuyNum'><button id='${ 
-                                    itemList[i].name 
+                                    `<td><input type='number' class='itemBuyNum'><button id='${
+                                    itemList[i].name
                                     }'class='btn-success btn btn-default sellItemButton'>Sell</button></td></tr>`;
                             });
 
                             $("#shopSellList").append(
-                                `Balance: ${ 
-                                    response.balance.balance 
+                                `Balance: ${
+                                    response.balance.balance
                                     }<table class='table-bordered'>` +
                                     `<th></th>` +
                                     `<th>Name</th>` +
                                     `<th>Desc</th>` +
                                     `<th>Stock</th>` +
                                     `<th>Sell price</th>` +
-                                    `<tbody>${ 
-                                    shopDiv 
+                                    `<tbody>${
+                                    shopDiv
                                     }</tbody></table>`
                             );
                         }
@@ -1592,53 +1592,53 @@ $(document).ready(() => {
                 $.each(charData, (i) => {
                     // get sprite id
                     const img =
-                        `/sprites/characters/${ 
-                        charData[i].char_name 
+                        `/sprites/characters/${
+                        charData[i].char_name
                         }/sprite.png`;
                     const exp = charData[i].exp - (charData[i].exp / 1000) * 1000;
                     const lvl = charData[i].exp / 1000;
 
                     $("#itemUseList").append(
-                        `<div class='itemPos' id='${ 
-                            charData[i].position 
-                            }'><button value='${ 
-                            charData[i].position 
-                            }' id='${ 
-                            id 
+                        `<div class='itemPos' id='${
+                            charData[i].position
+                            }'><button value='${
+                            charData[i].position
+                            }' id='${
+                            id
                             }' class='float-right btn btn-default btn-success useItemButton'>Use</button></div>`
                     );
 
                     $("#itemUseList").append(
                         `${"<div class=cont><div class='leftrow'>" +
-                            "<img class='spriteImg' src='"}${ 
-                            img 
+                            "<img class='spriteImg' src='"}${
+                            img
                             }'>` +
-                            `<div class='toprow'><div class='charName'>${ 
-                            charData[i].char_name 
-                            }<div class='charLevel'>Lv.${ 
-                            lvl 
-                            }<div class='exp'>Exp:${ 
-                            exp 
+                            `<div class='toprow'><div class='charName'>${
+                            charData[i].char_name
+                            }<div class='charLevel'>Lv.${
+                            lvl
+                            }<div class='exp'>Exp:${
+                            exp
                             }/1000</div>` +
                             `</div></div></div>` +
-                            `<div class='middlerow'><div class='health'>HP:${ 
-                            charData[i].healthPointsCurrent 
-                            }/${ 
-                            charData[i].healthpoints 
+                            `<div class='middlerow'><div class='health'>HP:${
+                            charData[i].healthPointsCurrent
+                            }/${
+                            charData[i].healthpoints
                             }</div>` +
-                            `<div class='stamina'>ST:${ 
-                            charData[i].staminaPointsCurrent 
-                            }/${ 
-                            charData[i].staminapoints 
+                            `<div class='stamina'>ST:${
+                            charData[i].staminaPointsCurrent
+                            }/${
+                            charData[i].staminapoints
                             }</div>` +
                             `</div>` +
-                            `<div class='thirdrow'><div>${ 
-                            charData[i].type 
+                            `<div class='thirdrow'><div>${
+                            charData[i].type
                             }</div></div>` +
-                            `<div class='fourthrow'><div>${ 
-                            charData[i].skill_name 
-                            }: ${ 
-                            charData[i].skill_desc 
+                            `<div class='fourthrow'><div>${
+                            charData[i].skill_name
+                            }: ${
+                            charData[i].skill_desc
                             }</div></div>`
                     );
                 });
@@ -1674,8 +1674,8 @@ $(document).ready(() => {
                         $.each(charData, (i) => {
                             // get sprite id
                             const img =
-                                `/sprites/characters/${ 
-                                charData[i].char_name 
+                                `/sprites/characters/${
+                                charData[i].char_name
                                 }/sprite.png`;
                             const exp =
                                 charData[i].exp -
@@ -1683,45 +1683,45 @@ $(document).ready(() => {
                             const lvl = charData[i].exp / 1000;
 
                             $("#itemUseList").append(
-                                `<div class='itemPos' id='${ 
-                                    charData[i].position 
-                                    }'><button value='${ 
-                                    charData[i].position 
-                                    }' id='${ 
-                                    id 
+                                `<div class='itemPos' id='${
+                                    charData[i].position
+                                    }'><button value='${
+                                    charData[i].position
+                                    }' id='${
+                                    id
                                     }' class='float-right btn btn-default btn-success useItemButton'>Use</button></div>`
                             );
                             $("#itemUseList").append(
                                 `${"<div class=cont><div class='leftrow'>" +
-                                    "<img class='spriteImg' src='"}${ 
-                                    img 
+                                    "<img class='spriteImg' src='"}${
+                                    img
                                     }'>` +
-                                    `<div class='toprow'><div class='charName'>${ 
-                                    charData[i].char_name 
-                                    }<div class='charLevel'>Lv.${ 
-                                    lvl 
-                                    }<div class='exp'>Exp:${ 
-                                    exp 
+                                    `<div class='toprow'><div class='charName'>${
+                                    charData[i].char_name
+                                    }<div class='charLevel'>Lv.${
+                                    lvl
+                                    }<div class='exp'>Exp:${
+                                    exp
                                     }/1000</div>` +
                                     `</div></div></div>` +
-                                    `<div class='middlerow'><div class='health'>HP:${ 
-                                    charData[i].healthPointsCurrent 
-                                    }/${ 
-                                    charData[i].healthpoints 
+                                    `<div class='middlerow'><div class='health'>HP:${
+                                    charData[i].healthPointsCurrent
+                                    }/${
+                                    charData[i].healthpoints
                                     }</div>` +
-                                    `<div class='stamina'>ST:${ 
-                                    charData[i].staminaPointsCurrent 
-                                    }/${ 
-                                    charData[i].staminapoints 
+                                    `<div class='stamina'>ST:${
+                                    charData[i].staminaPointsCurrent
+                                    }/${
+                                    charData[i].staminapoints
                                     }</div>` +
                                     `</div>` +
-                                    `<div class='thirdrow'><div>${ 
-                                    charData[i].type 
+                                    `<div class='thirdrow'><div>${
+                                    charData[i].type
                                     }</div></div>` +
-                                    `<div class='fourthrow'><div>${ 
-                                    charData[i].skill_name 
-                                    }: ${ 
-                                    charData[i].skill_desc 
+                                    `<div class='fourthrow'><div>${
+                                    charData[i].skill_name
+                                    }: ${
+                                    charData[i].skill_desc
                                     }</div></div>`
                             );
                         });
@@ -1750,26 +1750,26 @@ $(document).ready(() => {
                         `/sprites/items/${  itemList[i].name  }/sprite.png`;
                     const useButton =
                         itemList[i].category !== "battle_item"
-                            ? `<button id='${ 
-                              itemList[i].id 
+                            ? `<button id='${
+                              itemList[i].id
                               }'class='btn-success btn btn-default itemUse'>Use</button>`
                             : "";
 
                     itemDiv +=
-                        `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${ 
-                        img 
+                        `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${
+                        img
                         }'></td>` +
-                        `<td>${ 
-                        itemList[i].name 
+                        `<td>${
+                        itemList[i].name
                         }</td>` +
-                        `<td>${ 
-                        itemList[i].desc 
+                        `<td>${
+                        itemList[i].desc
                         }</td>` +
-                        `<td>${ 
-                        itemList[i].stock 
+                        `<td>${
+                        itemList[i].stock
                         }</td>` +
-                        `<td>${ 
-                        useButton 
+                        `<td>${
+                        useButton
                         }</td></tr>`;
                 });
 
@@ -1779,8 +1779,8 @@ $(document).ready(() => {
                         "<th>Name</th>" +
                         "<th>Desc</th>" +
                         "<th>Stock</th>" +
-                        "<tbody>"}${ 
-                        itemDiv 
+                        "<tbody>"}${
+                        itemDiv
                         }</tbody></table>`
                 );
             }
@@ -1974,16 +1974,16 @@ $(document).ready(() => {
             if (trainerData[0].moves[i] !== undefined) {
                 // assign to button
                 $(`#atkBtn${  j}`).append(
-                    `<button class='atkCommand btn btn-default btn-lg' data-position='${ 
-                        i 
-                        }' id='${ 
-                        trainerData[0].moves[i].id 
-                        }'>${ 
-                        trainerData[0].moves[i].name 
-                        }<br>${ 
-                        trainerData[0].moves[i].type 
-                        }<br> Cost:${ 
-                        trainerData[0].moves[i].cost 
+                    `<button class='atkCommand btn btn-default btn-lg' data-position='${
+                        i
+                        }' id='${
+                        trainerData[0].moves[i].id
+                        }'>${
+                        trainerData[0].moves[i].name
+                        }<br>${
+                        trainerData[0].moves[i].type
+                        }<br> Cost:${
+                        trainerData[0].moves[i].cost
                         }    </button>`
                 );
             }
@@ -2008,34 +2008,34 @@ $(document).ready(() => {
                         `/sprites/items/${  itemList[i].name  }/sprite.png`;
                     if (combatType !== "trainer" && itemList[i].id === 1) {
                         // allow usage of capture device only if its not a trainer battle
-                        useButton =
-                            `<button id='${ 
-                            itemList[i].id 
+                        var useButton =
+                            `<button id='${
+                            itemList[i].id
                             }' class='btn-success btn btn-default itemBattleUse'>Use</button>`;
                     } else if (itemList[i].id !== 1) {
-                            useButton =
-                                `<button id='${ 
-                                itemList[i].id 
+                            var useButton =
+                                `<button id='${
+                                itemList[i].id
                                 }' class='btn-success btn btn-default itemBattleUse'>Use</button>`;
                         } else {
-                            useButton = "";
+                            var useButton = "";
                         }
 
                     itemDiv +=
-                        `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${ 
-                        img 
+                        `<tbody><tr class='itemFrame'><td><img class='itemImg' src='${
+                        img
                         }'></td>` +
-                        `<td>${ 
-                        itemList[i].name 
+                        `<td>${
+                        itemList[i].name
                         }</td>` +
-                        `<td>${ 
-                        itemList[i].desc 
+                        `<td>${
+                        itemList[i].desc
                         }</td>` +
-                        `<td>${ 
-                        itemList[i].stock 
+                        `<td>${
+                        itemList[i].stock
                         }</td>` +
-                        `<td>${ 
-                        useButton 
+                        `<td>${
+                        useButton
                         }</td></tr>`;
                 });
 
@@ -2045,8 +2045,8 @@ $(document).ready(() => {
                         "<th>Name</th>" +
                         "<th>Desc</th>" +
                         "<th>Stock</th>" +
-                        "<tbody>"}${ 
-                        itemDiv 
+                        "<tbody>"}${
+                        itemDiv
                         }</tbody></table>`
                 );
             }
@@ -2061,67 +2061,67 @@ $(document).ready(() => {
         $.each(trainerData, (i) => {
             // get sprite id
             const img =
-                `/sprites/characters/${ 
-                trainerData[i].data.char_name 
+                `/sprites/characters/${
+                trainerData[i].data.char_name
                 }/sprite.png`;
             const lvl = trainerData[i].data.level;
 
             let moveDiv = "";
             $.each(trainerData[i].moves, (j) => {
                 moveDiv +=
-                    `<tr><td>${ 
-                    trainerData[i].moves[j].type 
-                    }</td><td>${ 
-                    trainerData[i].moves[j].name 
-                    }</td><td>${ 
-                    trainerData[i].moves[j].description 
-                    }</td><td>${ 
-                    trainerData[i].moves[j].power 
-                    }</td><td>${ 
-                    trainerData[i].moves[j].accuracy 
-                    }</td><td>${ 
-                    trainerData[i].moves[j].cost 
+                    `<tr><td>${
+                    trainerData[i].moves[j].type
+                    }</td><td>${
+                    trainerData[i].moves[j].name
+                    }</td><td>${
+                    trainerData[i].moves[j].description
+                    }</td><td>${
+                    trainerData[i].moves[j].power
+                    }</td><td>${
+                    trainerData[i].moves[j].accuracy
+                    }</td><td>${
+                    trainerData[i].moves[j].cost
                     }</td>`;
             });
 
             $("#charList").append(
-                `<div class='charCommand' id='${ 
-                    trainerData[i].data.position 
-                    }'><button value='${ 
-                    trainerData[i].data.position 
+                `<div class='charCommand' id='${
+                    trainerData[i].data.position
+                    }'><button value='${
+                    trainerData[i].data.position
                     }' class='float-right btn btn-default btn-success'>Change</button></div>`
             );
             $("#charList").append(
                 `${"<div class=cont><div class='leftrow'>" +
-                    "<img class='spriteImg' src='"}${ 
-                    img 
+                    "<img class='spriteImg' src='"}${
+                    img
                     }'>` +
-                    `<div class='toprow'><div class='charName'>${ 
-                    trainerData[i].data.char_name 
-                    }<div class='charLevel'>Lv.${ 
-                    lvl 
+                    `<div class='toprow'><div class='charName'>${
+                    trainerData[i].data.char_name
+                    }<div class='charLevel'>Lv.${
+                    lvl
                     }</div></div></div>` +
-                    `<div class='middlerow'><div class='health'>HP:${ 
-                    trainerData[i].data.healthPoints 
-                    }/${ 
-                    trainerData[i].data.maxHealth 
+                    `<div class='middlerow'><div class='health'>HP:${
+                    trainerData[i].data.healthPoints
+                    }/${
+                    trainerData[i].data.maxHealth
                     }</div>` +
-                    `<div class='stamina'>ST:${ 
-                    trainerData[i].data.staminaPoints 
-                    }/${ 
-                    trainerData[i].data.maxStamina 
+                    `<div class='stamina'>ST:${
+                    trainerData[i].data.staminaPoints
+                    }/${
+                    trainerData[i].data.maxStamina
                     }</div>` +
                     `</div>` +
-                    `<div class='thirdrow'><div>${ 
-                    trainerData[i].data.type 
+                    `<div class='thirdrow'><div>${
+                    trainerData[i].data.type
                     }</div></div>` +
-                    `<div class='fourthrow'><div>${ 
-                    trainerData[i].data.skill_name 
-                    }: ${ 
-                    trainerData[i].data.skill_desc 
+                    `<div class='fourthrow'><div>${
+                    trainerData[i].data.skill_name
+                    }: ${
+                    trainerData[i].data.skill_desc
                     }</div></div>` +
-                    `<div class='moverow'><table class='table-bordered'><th>Type</th><th>Name</th><th>Description</th><th>Power</th><th>Accuracy</th><th>Cost</th>${ 
-                    moveDiv 
+                    `<div class='moverow'><table class='table-bordered'><th>Type</th><th>Name</th><th>Description</th><th>Power</th><th>Accuracy</th><th>Cost</th>${
+                    moveDiv
                     }</table></div></div>`
             );
         });
@@ -2146,8 +2146,8 @@ $(document).ready(() => {
     });
 
     $(document).on("click", ".atkCommand", function () {
-        userAction = "attack";
-        idAction = [this.id, this.dataset.position];
+        var userAction = "attack";
+        var idAction = [this.id, this.dataset.position];
         $("#atkBattleModal").modal("hide");
         processBattleTurn(userAction, idAction);
         // using an attack command spends the turn, calling process turn, processing the command
@@ -2198,48 +2198,48 @@ $(document).ready(() => {
             $.each(trainerData, (i) => {
                 // get sprite id
                 const img =
-                    `/sprites/characters/${ 
-                    trainerData[i].data.char_name 
+                    `/sprites/characters/${
+                    trainerData[i].data.char_name
                     }/sprite.png`;
                 const lvl = trainerData[i].data.level;
 
                 $("#itemUseList").append(
-                    `<div class='itemPos' id='${ 
-                        trainerData[i].data.position 
-                        }'><button value='${ 
-                        trainerData[i].data.position 
-                        }' id='${ 
-                        id 
+                    `<div class='itemPos' id='${
+                        trainerData[i].data.position
+                        }'><button value='${
+                        trainerData[i].data.position
+                        }' id='${
+                        id
                         }' class='float-right btn btn-default btn-success itemCommand'>Use</button></div>`
                 );
                 $("#itemUseList").append(
                     `${"<div class=cont><div class='leftrow'>" +
-                        "<img class='spriteImg' src='"}${ 
-                        img 
+                        "<img class='spriteImg' src='"}${
+                        img
                         }'>` +
-                        `<div class='toprow'><div class='charName'>${ 
-                        trainerData[i].data.char_name 
-                        }<div class='charLevel'>Lv.${ 
-                        lvl 
+                        `<div class='toprow'><div class='charName'>${
+                        trainerData[i].data.char_name
+                        }<div class='charLevel'>Lv.${
+                        lvl
                         }</div></div></div>` +
-                        `<div class='middlerow'><div class='health'>HP:${ 
-                        trainerData[i].data.healthPoints 
-                        }/${ 
-                        trainerData[i].data.maxHealth 
+                        `<div class='middlerow'><div class='health'>HP:${
+                        trainerData[i].data.healthPoints
+                        }/${
+                        trainerData[i].data.maxHealth
                         }</div>` +
-                        `<div class='stamina'>ST:${ 
-                        trainerData[i].data.staminaPoints 
-                        }/${ 
-                        trainerData[i].data.maxStamina 
+                        `<div class='stamina'>ST:${
+                        trainerData[i].data.staminaPoints
+                        }/${
+                        trainerData[i].data.maxStamina
                         }</div>` +
                         `</div>` +
-                        `<div class='thirdrow'><div>${ 
-                        trainerData[i].data.type 
+                        `<div class='thirdrow'><div>${
+                        trainerData[i].data.type
                         }</div></div>` +
-                        `<div class='fourthrow'><div>${ 
-                        trainerData[i].data.skill_name 
-                        }: ${ 
-                        trainerData[i].data.skill_desc 
+                        `<div class='fourthrow'><div>${
+                        trainerData[i].data.skill_name
+                        }: ${
+                        trainerData[i].data.skill_desc
                         }</div></div>`
                 );
             });
@@ -2271,8 +2271,8 @@ $(document).ready(() => {
                     // process turn
                     $("#itemUseModal").modal("hide").empty();
                     $("#itemsModal").modal("hide").empty();
-                    userAction = "item";
-                    idAction = "Potion";
+                    var userAction = "item";
+                    var idAction = "Potion";
                     reloadBattleData();
                     processBattleTurn(userAction, idAction);
                 }
@@ -2296,8 +2296,8 @@ $(document).ready(() => {
                     // process turn
                     $("#itemUseModal").modal("hide").empty();
                     $("#itemsModal").modal("hide").empty();
-                    userAction = "item";
-                    idAction = "Super Potion";
+                    var userAction = "item";
+                    var idAction = "Super Potion";
                     reloadBattleData();
                     processBattleTurn(userAction, idAction);
                     // notice that we only process this line if the item can actually be used on the character
@@ -2322,8 +2322,8 @@ $(document).ready(() => {
                 .fadeToggle(2000, () => {
                     reloadBattleData();
                     if (fainted === false) {
-                        userAction = "change";
-                        idAction = "";
+                        var userAction = "change";
+                        var idAction = "";
                         processBattleTurn(userAction, idAction);
                     } else {
                         $("#buttonBar").show(); // turn ended
@@ -2376,7 +2376,7 @@ $(document).ready(() => {
                     default:
                         return 1;
                 }
-            
+
             default: break;
         }
     }
@@ -2389,67 +2389,67 @@ $(document).ready(() => {
         $.each(trainerData, (i) => {
             // get sprite id
             const img =
-                `/sprites/characters/${ 
-                trainerData[i].data.char_name 
+                `/sprites/characters/${
+                trainerData[i].data.char_name
                 }/sprite.png`;
             const lvl = trainerData[i].data.level;
 
             let moveDiv = "";
             $.each(trainerData[i].moves, (j) => {
                 moveDiv +=
-                    `<tr><td>${ 
-                    trainerData[i].moves[j].type 
-                    }</td><td>${ 
-                    trainerData[i].moves[j].name 
-                    }</td><td>${ 
-                    trainerData[i].moves[j].description 
-                    }</td><td>${ 
-                    trainerData[i].moves[j].power 
-                    }</td><td>${ 
-                    trainerData[i].moves[j].accuracy 
-                    }</td><td>${ 
-                    trainerData[i].moves[j].cost 
+                    `<tr><td>${
+                    trainerData[i].moves[j].type
+                    }</td><td>${
+                    trainerData[i].moves[j].name
+                    }</td><td>${
+                    trainerData[i].moves[j].description
+                    }</td><td>${
+                    trainerData[i].moves[j].power
+                    }</td><td>${
+                    trainerData[i].moves[j].accuracy
+                    }</td><td>${
+                    trainerData[i].moves[j].cost
                     }</td>`;
             });
 
             $("#charList").append(
-                `<div class='charCommand' id='${ 
-                    trainerData[i].data.position 
-                    }'><button value='${ 
-                    trainerData[i].data.position 
+                `<div class='charCommand' id='${
+                    trainerData[i].data.position
+                    }'><button value='${
+                    trainerData[i].data.position
                     }' class='float-right btn btn-default btn-success'>Change</button></div>`
             );
             $("#charList").append(
                 `${"<div class=cont><div class='leftrow'>" +
-                    "<img class='spriteImg' src='"}${ 
-                    img 
+                    "<img class='spriteImg' src='"}${
+                    img
                     }'>` +
-                    `<div class='toprow'><div class='charName'>${ 
-                    trainerData[i].data.char_name 
-                    }<div class='charLevel'>Lv.${ 
-                    lvl 
+                    `<div class='toprow'><div class='charName'>${
+                    trainerData[i].data.char_name
+                    }<div class='charLevel'>Lv.${
+                    lvl
                     }</div></div></div>` +
-                    `<div class='middlerow'><div class='health'>HP:${ 
-                    trainerData[i].data.healthPoints 
-                    }/${ 
-                    trainerData[i].data.maxHealth 
+                    `<div class='middlerow'><div class='health'>HP:${
+                    trainerData[i].data.healthPoints
+                    }/${
+                    trainerData[i].data.maxHealth
                     }</div>` +
-                    `<div class='stamina'>ST:${ 
-                    trainerData[i].data.staminaPoints 
-                    }/${ 
-                    trainerData[i].data.maxStamina 
+                    `<div class='stamina'>ST:${
+                    trainerData[i].data.staminaPoints
+                    }/${
+                    trainerData[i].data.maxStamina
                     }</div>` +
                     `</div>` +
-                    `<div class='thirdrow'><div>${ 
-                    trainerData[i].data.type 
+                    `<div class='thirdrow'><div>${
+                    trainerData[i].data.type
                     }</div></div>` +
-                    `<div class='fourthrow'><div>${ 
-                    trainerData[i].data.skill_name 
-                    }: ${ 
-                    trainerData[i].data.skill_desc 
+                    `<div class='fourthrow'><div>${
+                    trainerData[i].data.skill_name
+                    }: ${
+                    trainerData[i].data.skill_desc
                     }</div></div>` +
-                    `<div class='moverow'><table class='table-bordered'><th>Type</th><th>Name</th><th>Description</th><th>Power</th><th>Accuracy</th><th>Cost</th>${ 
-                    moveDiv 
+                    `<div class='moverow'><table class='table-bordered'><th>Type</th><th>Name</th><th>Description</th><th>Power</th><th>Accuracy</th><th>Cost</th>${
+                    moveDiv
                     }</table></div></div>`
             );
         });
@@ -2621,7 +2621,7 @@ $(document).ready(() => {
                             $("#battleText").html("");
                         });
                     return true;
-                } 
+                }
                     // hit
                     trainerData[0].data.staminaPoints -=
                         trainerData[0].moves[positionId].cost;
@@ -2664,7 +2664,7 @@ $(document).ready(() => {
                         reloadBattleData();
                         return true;
                     }
-                
+
             } else {
                 var {accuracy} = trainerData[0].moves[positionId];
                 // get random number, if its higher than accuracy, move fails, easy
@@ -2672,7 +2672,7 @@ $(document).ready(() => {
                 if (hits > accuracy) {
                     $("#battleText").html("Attack failed!");
                     return true;
-                } 
+                }
                     const html = checkSupportAttack(
                         trainerData[0].moves[positionId].id,
                         attackerId
@@ -2680,7 +2680,7 @@ $(document).ready(() => {
                     $("#battleText").html(trainerData[0].data.char_name + html);
                     reloadBattleData();
                     return true;
-                
+
             }
         } else {
             // when its the enemy turn, he just chooses a random attack
@@ -2714,7 +2714,7 @@ $(document).ready(() => {
                             $("#battleText").html("");
                         });
                     return true;
-                } 
+                }
                     // hit
                     rivalData[0].data.staminaPoints -= attack.cost;
                     // check if its THAT skill
@@ -2732,8 +2732,8 @@ $(document).ready(() => {
                         trainerData[0].data.healthPoints -= attackFormula;
                         $("#battleText")
                             .html(
-                                `${rivalData[0].data.char_name 
-                                    } uses ${ 
+                                `${rivalData[0].data.char_name
+                                    } uses ${
                                     attack.name}`
                             )
                             .fadeToggle(2000, () => {
@@ -2756,7 +2756,7 @@ $(document).ready(() => {
                         reloadBattleData();
                         return true;
                     }
-                
+
             } else {
                 var {accuracy} = attack;
                 // get random number, if its higher than accuracy, move fails, easy
@@ -2764,12 +2764,12 @@ $(document).ready(() => {
                 if (hits > accuracy) {
                     $("#battleText").html("Attack failed!");
                     return true;
-                } 
+                }
                     const html = checkSupportAttack(attack.id, attackerId);
                     $("#battleText").html(rivalData[0].data.char_name + html);
                     reloadBattleData();
                     return true;
-                
+
             }
         }
     }
@@ -2788,8 +2788,8 @@ $(document).ready(() => {
                 if (trainerData[0].data.speed > rivalData[0].data.speed) {
                     $("#battleText")
                         .html(
-                            `${trainerData[0].data.char_name 
-                                } uses ${ 
+                            `${trainerData[0].data.char_name
+                                } uses ${
                                 trainerData[0].moves[idAction[1]].name}`
                         )
                         .fadeToggle(2000, () => {

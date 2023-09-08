@@ -1,7 +1,7 @@
 @extends('layouts.app')
 <link href="css/welcome.css" rel="stylesheet">
 <div>
-    <x-navbar></x-navbar>
+    <x-navbar.main></x-navbar.main>
     <div class="welcome-box text-center">
         <div class="title">
             TouhouRPG

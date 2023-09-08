@@ -1,4 +1,4 @@
-import * as ajax from "./shared/ajax";
+import * as ajax from "./shared/ajax.js";
 
 $(document).ready(() => {
 
@@ -15,10 +15,10 @@ $(document).ready(() => {
                 if (response.success !== undefined) {
                     if (field !== "password-confirm" && field !== "password") {
                         const div =
-                            `<span class='valid-feedback   ${ 
-                            field 
-                            }Valid'><strong>${ 
-                            response.success 
+                            `<span class='valid-feedback   ${
+                            field
+                            }Valid'><strong>${
+                            response.success
                             }</strong></span>`;
                         $(`.${  field  }Valid`).remove(); // remove message
                         $(`#${  field}`)
@@ -77,10 +77,10 @@ $(document).ready(() => {
                 } else {
                     // error
                     const div =
-                        `<span class='invalid-feedback ${ 
-                        field 
-                        }Valid'><strong>${ 
-                        response.error 
+                        `<span class='invalid-feedback ${
+                        field
+                        }Valid'><strong>${
+                        response.error
                         }</strong></span>`;
                     $(`.${  field  }Valid`).remove();
                     $(`#${  field}`)
@@ -94,7 +94,7 @@ $(document).ready(() => {
                 $("<div/>", {
                     id: "textFail",
                     class: "text-danger",
-                    // .. you can go on and add properties
+                    //you can go on and add properties
                     html: `Something went wrong: ${ textStatus }`,
                 }).appendTo("body");
             });
