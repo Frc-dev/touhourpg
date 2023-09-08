@@ -3,13 +3,14 @@ import * as ajax from "./shared/ajax.js";
 $(document).ready(() => {
 
     $(".fieldForm").on("focusout", () => {
-        const field = this.id; // we will use this later for validation messages
-        const {value} = this; // value of the field we want to check
+        const field = event.target.id; // we will use this later for validation messages
+        const value = event.target; // value of the field we want to check
         const values = {
             field,
             value,
         };
 
+        console.log(values)
         ajax.getDetails(values, "validateField")
             .done((response) => {
                 if (response.success !== undefined) {

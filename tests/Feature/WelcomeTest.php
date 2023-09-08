@@ -13,7 +13,6 @@ class WelcomeTest extends TestCase
     public function testWelcomeRoute($route)
     {
         $response = $this->get($route);
-
         $response->assertStatus(200);
     }
 

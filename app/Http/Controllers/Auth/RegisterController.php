@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Application\User\UserService;
 use App\Http\Controllers\Controller;
+use App\Model\User;
 use App\Providers\RouteServiceProvider;
-use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -17,10 +18,13 @@ class RegisterController extends Controller
     //Where to redirect users after registration.
     protected string $redirectTo = RouteServiceProvider::HOME;
 
-    public function __construct()
+    public function __construct(
+        private readonly UserService $userService
+    )
     {
         $this->middleware('guest');
     }
+
     protected function validator(array $data): ContractsValidator
     {
         return Validator::make($data, [
@@ -40,53 +44,36 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function validateFields(){
+    public function validateFields(): void
+    {
         //validate specific field and send error message in case it's not valid
         $json = [];
+        $fieldValidationMessage = null;
         $value = $_POST['value'];
         $field = $_POST['field'];
-        if($field == "nick"){
-            //we manually validate the username, using validate only on form submit
-            if(!empty($value)){
-                //check length of username
-                if(strlen($value) > 3 && strlen($value) < 16){
-                    //check username is unique
-                    $users = User::where('nick', $value)->first();
-                    if($users){
-                        $json['error'] = trans("The user already exists.");
-                    }
-                }
-                else{
-                    $json['error'] = trans("User length not allowed.");
-                }
-            }
-            else{
-                $json['error'] = trans("Username cannot be empty.");
-            }
 
+        if ($field == "nick") {
+            $fieldValidationMessage = $this->userService->validateUsername($value);
+            $json = $fieldValidationMessage;
             echo json_encode($json);
-
         }
 
-        if($field == "email"){
+        if ($field == "email") {
             //we validate e-mail individually, using validation only on form submit
-            if(!empty($value)){
+            if (!empty($value)) {
                 //check length and validity of mail
                 if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
                     //check email doesn't belong to any user
                     $emails = User::where('email', $value)->first();
-                    if(!$emails){
+                    if (!$emails) {
                         $json['success'] = trans("Valid e-mail.");
-                    }
-                    else{
+                    } else {
                         $json['error'] = trans("This e-mail is already in use");
                     }
-                }
-                else{
+                } else {
                     $json['error'] = trans("Invalid e-mail.");
                 }
-            }
-            else{
+            } else {
                 $json['error'] = trans("E-mail cannot be empty.");
             }
 
@@ -94,16 +81,14 @@ class RegisterController extends Controller
 
         }
 
-        if($field == "password" || $field == "password-confirm"){
-            if(!empty($value)){
-                if(strlen($value)>3){
+        if ($field == "password" || $field == "password-confirm") {
+            if (!empty($value)) {
+                if (strlen($value) > 3) {
                     $json['success'] = trans("Valid password.");
-                }
-                else{
+                } else {
                     $json['error'] = trans("The password is too short.");
                 }
-            }
-            else{
+            } else {
                 $json['error'] = trans("Password cannot be empty.");
             }
             echo json_encode($json);
