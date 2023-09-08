@@ -16,7 +16,7 @@ class UserServiceTest extends UnitTestCase
 
     /** @test
      *  @dataProvider validUsernamesProvider
-     * */
+     */
     public function shouldAllowValidUsername($username)
     {
         $userRepositoryMock = $this->userRepositoryMock();
