@@ -15,9 +15,9 @@ class UnitTestCase extends TestCase
         return $this->createMock(UserRepository::class);
     }
 
-    public function shouldReturnUser($context, string $username, ?User $user = null): void
+    public function userRepositoryShouldReturnUser($userRepository, string $username, ?User $user = null): void
     {
-        $context->expects($this->once())
+        $userRepository->expects($this->once())
             ->method('findAnyWithName')
             ->with($username)
             ->willReturn($user);
