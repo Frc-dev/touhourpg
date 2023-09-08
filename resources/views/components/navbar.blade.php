@@ -8,7 +8,6 @@
                 aria-label="@lang('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             @auth
@@ -40,7 +39,6 @@
                                title="@lang('Message Inbox')" data-toggle="modal" data-target="#inboxModal">
                         <div id="msgCount"></div>
                     </div>
-
                     <div class="modal fade" id="inboxModal" tabindex="-1" role="dialog"
                          aria-labelledby="inboxModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -58,7 +56,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="modal fade" id="privateMessageModal" tabindex="-1" role="dialog"
                          aria-labelledby="privateMessageModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -82,7 +79,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="modal fade" id="sendReplyModal" tabindex="-1" role="dialog"
                          aria-labelledby="sendReplyModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -110,7 +106,6 @@
                             </div>
                         </div>
                     </div>
-
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -131,14 +126,7 @@
                         </div>
                     </li>
                 @endguest
-                <a href="/setlocale/en">
-                    <img alt="en_flag" src="/img/en_flag.png"
-                         width="60" height="35">
-                </a>
-                <a href="/setlocale/es">
-                    <img alt="es_flag" src="/img/es_flag.png"
-                         width="60" height="35" class="ml-3">
-                </a>
+                <x-locale_switcher></x-locale_switcher>
             </ul>
         </div>
     </div>

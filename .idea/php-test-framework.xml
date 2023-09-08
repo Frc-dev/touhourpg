@@ -6,6 +6,7 @@
         <cache>
           <versions>
             <info id="Local" version="8.5.27" />
+            <info id="LocalC:\laragon\www\touhourpg\vendor\autoload.php" version="9.6.11" />
           </versions>
         </cache>
       </tool>

@@ -41,15 +41,10 @@ Route::post('/edit/editUser','UserController@edit');
 Route::post('/edit/sendMessage','UserController@send');
 Route::post('/edit/sendReport','UserController@report');
 
+//if it doesn't fit to any entity or unit of work, use Utils
+Route::get('locale/{locale}', ['as' => 'locale.switch', 'uses' => 'UtilsController@setLocale']);
 
-
-Route::get('setlocale/{locale}', function ($locale) {
-    if (in_array($locale, Config::get('app.locales'))) {
-        session(['locale' => $locale]);
-    }
-    return redirect()->back();
-});
-
+//TODO no logic in routes
 Route::get('/u/{username}', function($username){
     $userExists = User::where('nick', $username)->first();
     $userOwns = Character::where('owner', $username);
@@ -77,7 +72,7 @@ Route::post('/load/loadMessageList','AuthController@loadMessageList');
 Route::post('/load/loadMessage','AuthController@loadMessage');
 Route::post('/load/getReplyData','AuthController@getReplyData');
 
-
+//TODO no logic in routes
 Route::get('/adminpanel',function(){
     //send user list to show on the admin panel
     $usersList = User::all();
@@ -100,7 +95,7 @@ Route::post('/admin/addWarning', 'AdminController@addWarning');
 Route::post('/admin/addBan', 'AdminController@addBan');
 
 
-//PLAY-RELATED ROUTES
+//TODO no logic in routes
 Route::get('/play',['middleware' => 'auth', function(){
     $user = Auth::user()->nick;
 
