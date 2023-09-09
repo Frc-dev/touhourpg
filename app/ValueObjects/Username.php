@@ -2,7 +2,7 @@
 
 namespace App\ValueObjects;
 
-use http\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 
 class Username
 {
@@ -27,6 +27,7 @@ class Username
             throw new InvalidArgumentException(trans('Invalid username length, must be 3-16 characters.'));
         }
 
+        dd(htmlspecialchars($username));
         if (htmlspecialchars($username) != $username)
         {
             throw new InvalidArgumentException(trans('Username has invalid characters.'));

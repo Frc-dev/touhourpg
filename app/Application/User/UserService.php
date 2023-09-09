@@ -15,12 +15,11 @@ class UserService
     public function validateUsername(string $username): string
     {
         $message = "";
-        !empty($username) ?: $message = trans("Username cannot be empty.");
 
         try {
             $username = Username::fromString($username);
         } catch (\Exception $e) {
-            $message = $e->getMessage();
+            return $e->getMessage();
         }
 
         !$this->userRepository->findAnyWithName($username->toString()) || ($message = trans("The user already exists."));

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Factory;
+namespace Factory\User;
 
 use App\Application\User\UserService;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -10,7 +10,7 @@ class UserServiceMockFactory extends UnitTestCase
 {
     //create userService with dependencies
     public function create(
-        ?MockObject $userRepository
+        ?MockObject $userRepository = null
     ): UserService
     {
         return new UserService(
