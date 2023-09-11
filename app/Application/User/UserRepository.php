@@ -8,7 +8,6 @@ class UserRepository
 {
     public function findAnyWithName($nick): ?User
     {
-        dd('you shouldnt enter here');
         return User::where('nick', $nick)->first();
     }
 }

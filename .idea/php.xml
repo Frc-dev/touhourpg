@@ -114,7 +114,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
       <path value="$PROJECT_DIR$/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/vendor/league/mime-type-detection" />
-      <path value="$PROJECT_DIR$/../../bin/php/php-7.4.19-Win32-vc15-x64" />
+      <path value="$USER_HOME$/bin/php/php-7.4.19-Win32-vc15-x64" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-invoker" />
       <path value="$PROJECT_DIR$/vendor/league/config" />
       <path value="$PROJECT_DIR$/vendor/nette/utils" />
@@ -131,7 +131,7 @@
       <path value="$PROJECT_DIR$/vendor/dflydev/dot-access-data" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
   <component name="PhpStan">
     <PhpStan_settings>
       <PhpStanConfiguration tool_path="$PROJECT_DIR$/vendor/bin/phpstan" />

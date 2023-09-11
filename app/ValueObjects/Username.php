@@ -27,7 +27,6 @@ class Username
             throw new InvalidArgumentException(trans('Invalid username length, must be 3-16 characters.'));
         }
 
-        dd(htmlspecialchars($username));
         if (htmlspecialchars($username) != $username)
         {
             throw new InvalidArgumentException(trans('Username has invalid characters.'));
