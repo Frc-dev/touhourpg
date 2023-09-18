@@ -2,48 +2,54 @@ version: "3.7"
 services:
   app:
     build:
-      args:
-        user: 1000:1000
-      context: ./
+      context: .
       dockerfile: Dockerfile
-    image: touhourpg
+    image: digitalocean.com/php
     container_name: touhourpg-app
     restart: unless-stopped
-    working_dir: /var/www/
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
     volumes:
       - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
-      - touhourpg
+      - touhourpg-network
 
   db:
     image: mysql:8.0
     container_name: touhourpg-db
     restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
       - ./docker-compose/mysql:/docker-entrypoint-initdb.d
     networks:
-      - touhourpg
+      - touhourpg-network
 
   nginx:
     image: nginx:alpine
     container_name: touhourpg-nginx
     restart: unless-stopped
+    tty: true
     ports:
-      - 8000:80
+      - "80:80"
+      - "443:443"
     volumes:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d/
     networks:
-      - touhourpg
+      - touhourpg-network
 
 networks:
-  touhourpg:
+  touhourpg-network:
     driver: bridge
-
