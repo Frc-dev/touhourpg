@@ -32,8 +32,6 @@ Route::get('/welcome', function () {
 
 Auth::routes();
 
-Route::post('validateField','Auth\RegisterController@validateField');
-
 Route::post('/edit/uploadUserFile','UserController@upload');
 Route::post('/edit/editUser','UserController@edit');
 Route::post('/edit/sendMessage','UserController@send');

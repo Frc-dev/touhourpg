@@ -4,15 +4,15 @@ $(document).ready(() => {
 
     $(".fieldForm").on("focusout", () => {
         const field = event.target.id; // we will use this later for validation messages
-        const value = event.target; // value of the field we want to check
+        const value = event.target.value; // value of the field we want to check
         const values = {
             field,
             value,
         };
 
-        console.log(values)
-        ajax.getDetails(values, "validateField")
+        ajax.getDetails("/api/validateField", values)
             .done((response) => {
+                console.log(response)
                 if (response.success !== undefined) {
                     if (field !== "password-confirm" && field !== "password") {
                         const div =
