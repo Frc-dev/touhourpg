@@ -4,7 +4,7 @@
     <div class="row justify-content-center mt-4">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">@lang('Register')</div>
+                <div class="card-header">@lang('messages.auth.register.title')</div>
                 <div class="card-body d-flex justify-content-between w-100">
                     <form method="POST" action="{{ route('register') }}" class="w-100">
                         @csrf

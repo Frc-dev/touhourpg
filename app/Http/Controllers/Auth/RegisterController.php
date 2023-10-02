@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Model\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Validation\Validator as ContractsValidator;
@@ -26,7 +27,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'nick' => ['required', 'string', 'min:3', 'max:16', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:4', 'confirmed'],
+            'password' => ['required', 'string', 'min:4'],
         ]);
     }
 
@@ -45,6 +46,7 @@ class RegisterController extends Controller
         //validate specific field and send error message in case it's not valid
         $value = $_POST['value'];
         $field = $_POST['field'];
+
         $validator = $this->validator([$field => $value]);
 
         if ($validator->fails()) {

@@ -19,7 +19,7 @@ return [
         ],
         'email' => [
             'singular_entity' => 'Dirección de correo',
-            'optional' => 'La dirección de correo es opcional, pero lo necesitaremos si olvidas tu contraseña. Prometemos no enviarte correo basura.',
+            'optional' => 'La dirección de correo es opcional, pero la necesitaremos si olvidas tu contraseña. Prometemos no enviarte correo basura.',
             'empty' => 'La dirección de correo no puede estar vacía',
             'invalid' => 'Dirección de correo no válida',
             'exists' => 'Esta dirección ya está en uso',
@@ -31,6 +31,10 @@ return [
             'exists' => 'El usuario ya está en uso'
         ],
         'login_remember' => 'Recuérdame',
+        'register' => [
+            'title' => 'Registro',
+            'confirm' => 'Confirmar registro'
+        ]
     ],
     'header' => [
         'home' => 'Inicio',
