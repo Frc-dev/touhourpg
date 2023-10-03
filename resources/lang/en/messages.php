@@ -31,6 +31,9 @@ return [
             'exists' => 'The user already exists'
         ],
         'login_remember' => 'Remember me',
+        'register' => [
+            'title' => 'Register'
+        ]
     ],
     'header' => [
         'home' => 'Home',

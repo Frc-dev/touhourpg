@@ -25,9 +25,9 @@ class RegisterController extends Controller
     protected function validator(array $data): ContractsValidator
     {
         return Validator::make($data, [
-            'nick' => ['required', 'string', 'min:3', 'max:16', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:4'],
+            'nick' => ['required', 'string', 'min:3', 'max:16', 'unique:users', 'alpha_dash'],
+            'email' => ['string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:4']
         ]);
     }
 

@@ -2,6 +2,9 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <script type="text/javascript">
+        window.locale = "{{ $_locale ?? 'en' }}"
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
@@ -30,7 +33,6 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo asset('css/auth.css')?>" type="text/css">
-
     <title>TouhouRPG</title>
 </head>
 </html>

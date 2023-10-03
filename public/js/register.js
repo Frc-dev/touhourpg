@@ -13,7 +13,6 @@ $(document).ready(() => {
     }
 
     function toggleValidClasses(field, removeClass, addClass) {
-        console.log(field)
          $("#" + field)
              .removeClass(removeClass)
              .addClass(addClass)
@@ -27,26 +26,33 @@ $(document).ready(() => {
         const value = event.target.value; // value of the field we want to check
         const values = {
             'field': field,
-            'value': value
+            'value': value,
+            'locale': window.locale
         };
 
         const passwordConfirmField = "passwordConfirmField";
         const validField = "is-valid";
         const invalidField = "is-invalid";
+
         if (fieldId === passwordConfirmField) {
             //check if passwords match
-            let firstPassword = $("#passwordField").value;
+            let firstPassword = $("#passwordField").val();
 
             if (firstPassword !== value) {
                 toggleValidClasses(passwordConfirmField, validField, invalidField);
-                buildInvalidMessage(field);
+                buildInvalidMessage('passwordConfirm', '');
+            } else {
+                toggleValidClasses(passwordConfirmField, invalidField, validField);
             }
+
+            event.stopPropagation();
         }
 
         ajax.getDetails("/api/validateField", values)
             .done((response) => {
                 //make it dynamic
                 const fieldContainerName = field + "Field";
+
                 if (response[field] !== undefined) {
                     toggleValidClasses(fieldContainerName, validField, invalidField)
                     buildInvalidMessage(field, response[field])
