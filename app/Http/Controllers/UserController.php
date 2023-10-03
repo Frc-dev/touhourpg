@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Message;
 use App\Report;
-use App\User;
+use App\Model\User;
 use finfo;
 use Illuminate\Http\Request;
 use RuntimeException;

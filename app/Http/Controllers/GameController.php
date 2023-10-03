@@ -11,7 +11,7 @@ use App\MapPosition;
 use App\MovesCharacter;
 use App\MovesUser;
 use App\Textline;
-use App\User;
+use App\Model\User;
 use App\UserConversation;
 use App\UserEvent;
 use Illuminate\Http\Request;
