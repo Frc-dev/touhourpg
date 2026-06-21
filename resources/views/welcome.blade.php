@@ -73,7 +73,7 @@
                 <div class="title m-b-md">
                     TouhouRPG
                 </div>
-                <h4>by Francis Rodríguez</h4>
+                <h4><a href="https://github.com/frc-dev"> by Frc</h4>
 
             </div>
         </div>

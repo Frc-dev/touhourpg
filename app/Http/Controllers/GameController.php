@@ -36,7 +36,7 @@ class GameController extends Controller
                 $json['success'] = $userData;
             }
             else{
-                $json['error'] = trans("Error when retrieving player data.");
+                $json['error'] = __("Error when retrieving player data.");
             }
 
             echo json_encode($json);
@@ -93,17 +93,17 @@ class GameController extends Controller
                             $json['success'] = $conversation;
                         }
                         else{
-                            $json['error'] = trans("Error when retrieving conversation textlines.");
+                            $json['error'] = __("Error when retrieving conversation textlines.");
                         }
                     }
                     else{
-                        $json['error'] = trans("Error when retrieving conversation data.");
+                        $json['error'] = __("Error when retrieving conversation data.");
                     }
                 }
 
             }
             else{
-                $json['error'] = trans("Error when retrieving conversation data.");
+                $json['error'] = __("Error when retrieving conversation data.");
             }
 
             echo json_encode($json);
@@ -253,7 +253,7 @@ class GameController extends Controller
                 }
             }
             else{
-                $json['error'] = trans("Error when retrieving characters / No characters");
+                $json['error'] = __("Error when retrieving characters / No characters");
             }
 
             echo json_encode($json);
@@ -311,12 +311,12 @@ class GameController extends Controller
                     }
                 }
                 else{
-                    $json['error'] = trans("Error when retrieving characters / No characters");
+                    $json['error'] = __("Error when retrieving characters / No characters");
                 }
 
             }
             else{
-                $json['error'] = trans("Error when saving positions");
+                $json['error'] = __("Error when saving positions");
 
             }
         }

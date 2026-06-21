@@ -43,8 +43,8 @@ class AuthController extends Controller
             $message->status = "READ";
             $message->save();
             $json['messageData'] = $message;
-            $json['fromText'] = trans("From: ");
-            $json['subjectText'] = trans("Subject: ");
+            $json['fromText'] = __("From: ");
+            $json['subjectText'] = __("Subject: ");
 
             echo json_encode($json);
         }
@@ -58,9 +58,9 @@ class AuthController extends Controller
 
             $message = Message::where('id', $messageId)->first();
             $json['messageData'] = $message;
-            $json['toText'] = trans("To: ");
-            $json['subjectText'] = trans("Subject: ");
-            $json['messageText'] = trans("Message: ");
+            $json['toText'] = __("To: ");
+            $json['subjectText'] = __("Subject: ");
+            $json['messageText'] = __("Message: ");
 
 
             echo json_encode($json);

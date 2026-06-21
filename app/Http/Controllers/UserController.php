@@ -33,35 +33,35 @@ class UserController extends Controller
                     $dest_path = $uploadFileDir . $newFileName;
                     if(move_uploaded_file($fileTmpPath, $dest_path))
                     {
-                        $json['success'] = trans('Image updated successfully.');
+                        $json['success'] = __('Image updated successfully.');
 
                         //update database
                         $user = User::where("nick", $_POST['user'])->first();
                         $user->profilePicture = $newFileName;
                         $user->save();
                         if($user->wasChanged()){
-                            $json['success'] = trans('Image updated successfully.');
+                            $json['success'] = __('Image updated successfully.');
                         }
                         else{
-                            $json['error'] = trans("Error when updating image.");
+                            $json['error'] = __("Error when updating image.");
                         }
                     }
                     else
                     {
-                        $json['error'] = trans("Error when uploading image.");
+                        $json['error'] = __("Error when uploading image.");
                     }
                 }
                 else{
-                    $json['error'] = trans("Invalid file format.");
+                    $json['error'] = __("Invalid file format.");
                 }
             }
             else{
-                $json['error'] = trans("Exceeded filesize limit.");
+                $json['error'] = __("Exceeded filesize limit.");
             }
 
         }
         else{
-            $json['error'] = trans("Invalid parameters.");
+            $json['error'] = __("Invalid parameters.");
         }
         header('Content-Type: json; charset=utf-8');
         echo json_encode($json);
@@ -82,10 +82,10 @@ class UserController extends Controller
             $userData->save();
 
             if($userData->wasChanged()){
-                $json['success'] = trans("Updated successfully");
+                $json['success'] = __("Updated successfully");
             }
             else{
-                $json['error'] = trans("Error when updating profile");
+                $json['error'] = __("Error when updating profile");
             }
 
             echo json_encode($json);
@@ -101,7 +101,7 @@ class UserController extends Controller
             $sender = $_POST['sender'];
             $receiver = $_POST['receiver'];
             if($subject == ""){
-                $subject = trans("Empty subject");
+                $subject = __("Empty subject");
             }
                 $msg = new Message;
                 $msg->from = $sender;
@@ -112,10 +112,10 @@ class UserController extends Controller
                 $msg->save();
 
                 if($msg->exists()){
-                    $json['success'] = trans("Message sent successfully");
+                    $json['success'] = __("Message sent successfully");
                 }
                 else{
-                    $json['error'] = trans("Error when sending the message");
+                    $json['error'] = __("Error when sending the message");
                 }
 
                 echo json_encode($json);
@@ -137,10 +137,10 @@ class UserController extends Controller
             $report->status = "Pending";
             $report->save();
             if($report->exists){
-                $json['success'] = trans("User reported successfully");
+                $json['success'] = __("User reported successfully");
             }
             else{
-                $json['error'] = trans("Error when reporting the user");
+                $json['error'] = __("Error when reporting the user");
             }
 
             echo json_encode($json);

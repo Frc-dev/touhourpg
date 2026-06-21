@@ -19,7 +19,7 @@ class AdminController extends Controller
                 $json['success'] = $bans;
             }
             else{
-                $json['error'] = trans("Error when retrieving the reports");
+                $json['error'] = __("Error when retrieving the reports");
             }
 
             echo json_encode($json);
@@ -37,7 +37,7 @@ class AdminController extends Controller
                 $json['success'] = $ban;
             }
             else{
-                $json['error'] = trans("Error when retrieving the reports");
+                $json['error'] = __("Error when retrieving the reports");
             }
 
             echo json_encode($json);
@@ -59,10 +59,10 @@ class AdminController extends Controller
             $ban->processedBy = $processedBy;
             $ban->save();
             if($ban->wasChanged()){
-                $json['success'] = trans('Report processed successfully');
+                $json['success'] = __('Report processed successfully');
             }
             else{
-                $json['error'] = trans("Error when processing the report");
+                $json['error'] = __("Error when processing the report");
             }
 
             echo json_encode($json);
@@ -81,7 +81,7 @@ class AdminController extends Controller
                 $json['success'] = $ban;
             }
             else{
-                $json['error'] = trans("Error when retrieving the reports");
+                $json['error'] = __("Error when retrieving the reports");
             }
 
             echo json_encode($json);
@@ -103,10 +103,10 @@ class AdminController extends Controller
             $ban->unbanned_by = $processedBy;
             $ban->save();
             if($ban->wasChanged()){
-                $json['success'] = trans('Ban processed successfully');
+                $json['success'] = __('Ban processed successfully');
             }
             else{
-                $json['error'] = trans("Error when processing the ban");
+                $json['error'] = __("Error when processing the ban");
             }
 
             echo json_encode($json);
@@ -145,9 +145,9 @@ class AdminController extends Controller
             $warning->status = "Active";
 
             if ($warning->save()) {
-                $json['success'] = trans("Warning added successfully");
+                $json['success'] = __("Warning added successfully");
             } else {
-                $json['error'] = trans("Error when adding warning");
+                $json['error'] = __("Error when adding warning");
             }
 
             echo json_encode($json);
@@ -166,7 +166,7 @@ class AdminController extends Controller
             $currentBans = Ban::where('user', $user);
 
             if($currentBans->first() != null){
-                $json['error'] = trans("There is already a ban in place.");
+                $json['error'] = __("There is already a ban in place.");
             }
             else{
                 $ban = new Ban;
@@ -176,9 +176,9 @@ class AdminController extends Controller
                 $ban->status = "Active";
 
                 if ($ban->save()) {
-                    $json['success'] = trans("Ban added successfully");
+                    $json['success'] = __("Ban added successfully");
                 } else {
-                    $json['error'] = trans("Error when adding ban");
+                    $json['error'] = __("Error when adding ban");
                 }
             }
 

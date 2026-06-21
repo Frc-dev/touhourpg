@@ -87,18 +87,18 @@ class RegisterController extends Controller
                     //check username is unique
                     $users = User::where('nick', $value)->first();
                     if(!$users){
-                        $json['success'] = trans("Valid user.");
+                        $json['success'] = __("Valid user.");
                     }
                     else{
-                        $json['error'] = trans("The user already exists.");
+                        $json['error'] = __("The user already exists.");
                     }
                 }
                 else{
-                    $json['error'] = trans("User length not allowed.");
+                    $json['error'] = __("User length not allowed.");
                 }
             }
             else{
-                $json['error'] = trans("Username cannot be empty.");
+                $json['error'] = __("Username cannot be empty.");
             }
 
             echo json_encode($json);
@@ -112,18 +112,18 @@ class RegisterController extends Controller
                     //check email doesnt belong to any user
                     $emails = User::where('email', $value)->first();
                     if(!$emails){
-                        $json['success'] = trans("Valid e-mail.");
+                        $json['success'] = __("Valid e-mail.");
                     }
                     else{
-                        $json['error'] = trans("This e-mail is already in use");
+                        $json['error'] = __("This e-mail is already in use");
                     }
                 }
                 else{
-                    $json['error'] = trans("Invalid e-mail.");
+                    $json['error'] = __("Invalid e-mail.");
                 }
             }
             else{
-                $json['error'] = trans("E-mail cannot be empty.");
+                $json['error'] = __("E-mail cannot be empty.");
             }
 
             echo json_encode($json);
@@ -132,14 +132,14 @@ class RegisterController extends Controller
         if($field == "password" || $field == "password-confirm"){
             if(!empty($value)){
                 if(strlen($value)>3){
-                    $json['success'] = trans("Valid password.");
+                    $json['success'] = __("Valid password.");
                 }
                 else{
-                    $json['error'] = trans("The password is too short.");
+                    $json['error'] = __("The password is too short.");
                 }
             }
             else{
-                $json['error'] = trans("Password cannot be empty.");
+                $json['error'] = __("Password cannot be empty.");
             }
 
             echo json_encode($json);
